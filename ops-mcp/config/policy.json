@@ -1,0 +1,21 @@
+{
+  "_comment": "RBAC roles. A role grants capabilities by name or by tier. may_approve is the only way to approve (ADR-0029, ADR-0010). Agents never receive may_approve.",
+  "roles": {
+    "owner": {
+      "tiers": ["read", "write"],
+      "may_approve": true
+    },
+    "agent_reader": {
+      "tiers": ["read"],
+      "may_approve": false
+    },
+    "agent_operator": {
+      "tiers": ["read", "write"],
+      "may_approve": false
+    },
+    "workflow_health": {
+      "capabilities": ["get_system_status", "get_alerts", "get_availability", "get_nodes"],
+      "may_approve": false
+    }
+  }
+}

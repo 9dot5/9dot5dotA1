@@ -1,0 +1,24 @@
+{
+  "_comment": "Node registry. No addresses, keys or credentials here (ADR-0014). enabled=false means no adapter may act on the node. manual_only=true means writes are refused and the owner runs them (M2M_ARCHITECTURE section 6).",
+  "alentejo": {
+    "name": "PC Alentejo",
+    "zone": "node-alentejo",
+    "enabled": false,
+    "manual_only": false,
+    "note": "Windows host. Owner-controlled status not recorded (M2M section 9). Enable after access is recorded."
+  },
+  "sigma": {
+    "name": "Sigma (shared university server)",
+    "zone": "node-sigma",
+    "enabled": false,
+    "manual_only": true,
+    "note": "Monitoring centre (owner decision 2026-10-25). Shared host (T-08): health and metrics only, no audit records, no secrets, no personal data. Writes are refused (manual_only). Hops to lab PCs need a named entry per host (M2M C-5, C-6)."
+  },
+  "lsd2": {
+    "name": "LSD2",
+    "zone": "node-unknown",
+    "enabled": false,
+    "manual_only": true,
+    "note": "Identity not confirmed (M2M section 13, question 1). Excluded until identified."
+  }
+}

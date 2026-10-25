@@ -1,0 +1,5 @@
+# CODEOWNERS
+# Sole owner: every path is owned by the repository owner.
+# When a second maintainer joins, add their handle here and in the matching ADR/governance entry.
+
+*                         @9dot5

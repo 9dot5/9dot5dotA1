@@ -1,0 +1,7 @@
+{
+  "_comment": "Security gate (ADR-0031). Only the owner edits this file. Agents may not change it (CLAUDE.md). The gate is open only when every ADR in REQUIRED_ADRS is Accepted (read from adr/) AND both review records below are filled in with a name and an ISO date.",
+  "threat_model_reviewed_by": "",
+  "threat_model_review_date": "",
+  "permission_matrix_approved_by": "",
+  "permission_matrix_approved_date": ""
+}

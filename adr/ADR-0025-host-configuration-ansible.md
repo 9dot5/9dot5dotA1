@@ -1,6 +1,6 @@
 # ADR-0025: Host configuration with Ansible, pull model
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Date:** 2026-10-25
 - **Deciders:** Rui Silva (`9dot5`)
 - **Review by:** 2027-04-25
@@ -54,3 +54,9 @@ Score for A is an estimate. Values: value 4, frequency 4, cost 4, risk 3, revers
 - Trust boundaries: TB-1 (repository to host). The repository becomes a configuration source for hosts, so a malicious merge reaches every host. Branch protection with required checks is a precondition (ADR-0036, ADR-0038).
 - Data classes: Public in the repository. Internal and Secret data stay on the host.
 - Threats: tampering with `main` (T-09). Supply chain of Ansible collections: versions are pinned and reviewed.
+
+## Change history
+
+| Date | Change | By |
+|---|---|---|
+| 2026-10-25 | Accepted, with residual risks R-31. ADR-0037 double check: automatic check passed; owner named and confirmed it in the session ("sim, aceito a ADR-0025, ADR-0034 e ADR-0035, e a exceção da Fase 00") | Owner decision, recorded by an unregistered Claude Code session (no `AGENT_ID`, see R-01) |

@@ -71,7 +71,8 @@ if ($Rebuild -or $LASTEXITCODE -ne 0) {
 }
 
 # 5. ansible-pull ----------------------------------------------------------------
-$socket = (& podman info --format '{{.Host.RemoteSocket.Path}}').Trim()
+# podman info returns a URL (unix:///run/podman/podman.sock); a bind mount needs the bare path.
+$socket = (& podman info --format '{{.Host.RemoteSocket.Path}}').Trim() -replace '^unix://', ''
 if (-not $socket) { throw 'Could not find the Podman socket path.' }
 
 & podman run --rm --network monitoring `

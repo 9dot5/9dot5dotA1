@@ -1,0 +1,26 @@
+# Secrets and credentials (SECRET_MANAGEMENT rule 1, BACKLOG B-04)
+*.pem
+*.key
+*.p12
+*.pfx
+*.token
+.env
+.env.*
+audit-sink*
+agent-audit*
+
+# Agent runtime state (ADR-0017), kept outside the repository but excluded if copied here
+.9dot5dotA1/
+sessions/
+
+# Tooling output
+__pycache__/
+*.pyc
+.venv/
+node_modules/
+
+# Editor and OS files
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini

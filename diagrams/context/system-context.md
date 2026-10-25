@@ -1,13 +1,16 @@
 # System context diagram
 
+**Owner:** Rui Silva (`9dot5`)
+
+**Status:** Proposed · **Review by:** 2027-01-25
+
 Source for [architecture/CONTEXT.md](../../architecture/CONTEXT.md). Mermaid; render in GitHub or Confluence.
 
 ```mermaid
 flowchart LR
   owner([Owner])
   collab([Collaborators])
-  claude[Claude CLI<br/>architect, reviewer]
-  devin[Devin<br/>executor]
+  claude[Claude Code<br/>architect, reviewer, executor]
   mcp[MCP clients]
 
   subgraph platform[9dot5dotA1 platform]
@@ -24,7 +27,7 @@ flowchart LR
   owner --> portal
   collab --> portal
   claude --> mcp
-  devin --> git
+  claude --> git
   mcp --> portal
   portal --> knowledge
   portal --> services

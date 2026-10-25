@@ -1,5 +1,7 @@
 # Backup Strategy
 
+**Owner:** Rui Silva (`9dot5`) · **Review by:** 2027-01-25
+
 **Status:** Proposed · **Control:** A.8.13 · **Related:** security/DISASTER_RECOVERY.md
 
 ## Principles

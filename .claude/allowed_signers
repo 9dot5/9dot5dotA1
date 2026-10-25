@@ -1,0 +1,5 @@
+architect@agents.9dot5dotA1.invalid namespaces="git" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL8abbGdCvhthGJPGd43HQLlOu8wOlByrrcJ2hvgC46j agent-architect
+governance-checker@agents.9dot5dotA1.invalid namespaces="git" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH0y6mEdsjTUhnfzWIor89flHrbVG7LXVyKhJnb8c8Hc agent-governance-checker
+security-reviewer@agents.9dot5dotA1.invalid namespaces="git" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL598d75EBvTTSR1pgkrqyI9nnDW6EXvGFWoUJZoAAqY agent-security-reviewer
+docs-maintainer@agents.9dot5dotA1.invalid namespaces="git" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOWn/XVv/M60qlnGMgE4K6IpCjwXJwiQa0b0L+VcfwJ5 agent-docs-maintainer
+executor@agents.9dot5dotA1.invalid namespaces="git" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL9MJDfo3v1uIgn7nfEtJrBiEETzrhD6SpnzBB+f8Ohc agent-executor

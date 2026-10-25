@@ -1,5 +1,7 @@
 # OWASP Adoption
 
+**Owner:** Rui Silva (`9dot5`) · **Review by:** 2027-01-25
+
 **Status:** Proposed · **Principle:** OWASP by Design (PRINCIPLES.md #11)
 
 ## Scope

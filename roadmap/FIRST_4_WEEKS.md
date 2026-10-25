@@ -1,5 +1,9 @@
 # First four weeks — execution order
 
+**Owner:** Rui Silva (`9dot5`)
+
+**Review by:** 2027-01-25
+
 **Status:** Proposed. Each step names what must be done before the next begins.
 
 ## Week 1 — Foundations

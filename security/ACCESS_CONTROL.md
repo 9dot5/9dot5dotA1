@@ -1,5 +1,7 @@
 # Access Control
 
+**Owner:** Rui Silva (`9dot5`) · **Review by:** 2027-01-25
+
 **Status:** Proposed · **Control:** A.5.15, A.5.18, A.8.2, A.8.5 · **Principle:** ADR-0004
 
 ## Roles
@@ -25,7 +27,12 @@
 
 | Identity | Role | Granted | Review date | Notes |
 |---|---|---|---|---|
-| Rui Silva (`9dot5`) | Owner | [date] | [date] | |
+| Rui Silva (`9dot5`) | Owner | 2026-10-24 | 2027-01-24 | Quarterly review. Recovery path to be recorded offline. |
+| `architect` (agent) | Agent | pending | 2027-01-24 | Identity pending: GitHub account and signing key not created. See operations/AGENT_IDENTITIES.md. |
+| `governance-checker` (agent) | Agent | pending | 2027-01-24 | As above. Read-only. |
+| `security-reviewer` (agent) | Agent | pending | 2027-01-24 | As above. Read-only. |
+| `docs-maintainer` (agent) | Agent | pending | 2027-01-24 | As above. |
+| `executor` (agent) | Agent | pending | 2027-01-24 | As above. No merge rights. |
 
 ## Repository protection
 

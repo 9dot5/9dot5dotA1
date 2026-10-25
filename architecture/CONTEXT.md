@@ -1,5 +1,7 @@
 # System Context
 
+**Review by:** 2027-01-25
+
 **Status:** Proposed · **Owner:** Rui Silva (`9dot5`) · **Review:** each phase gate
 
 ## Actors
@@ -8,8 +10,7 @@
 |---|---|---|
 | Owner | Human | Administers, approves, owns risk |
 | Collaborators | Human | Read and contribute to knowledge; limited operations rights |
-| Claude CLI | AI agent | Architect, reviewer, documenter, via MCP and terminal |
-| Devin | AI agent | Executor: implements, tests, opens pull requests |
+| Claude Code | AI agent | Architect, reviewer, documenter and executor, through the terminal and project subagents (ADR-0011); MCP from Phase 08 |
 | MCP clients | Software | Expose platform capabilities to agents under scoped tokens |
 | Upstream providers | External | Git hosting, Atlassian suite, model APIs, DNS, backup targets |
 

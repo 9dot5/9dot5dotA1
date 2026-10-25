@@ -1,11 +1,13 @@
 # Contributing
 
+**Owner:** Rui Silva (`9dot5`) · **Status:** Proposed · **Review by:** 2027-01-25
+
 ## Ground rules
 
 1. **Documentation first.** A change that alters architecture, security or operations
    starts with a document (ADR, phase or runbook) and only then code or configuration.
-2. **Human in the loop.** AI agents (Devin, Claude CLI, MCP clients) may draft, implement
-   and open pull requests. A named human approves every merge to `main`.
+2. **Human in the loop.** AI agents (Claude Code, MCP clients) may draft, implement
+   and open pull requests, under [CLAUDE.md](CLAUDE.md) and [ADR-0011](adr/ADR-0011-agent-architecture.md). A named human approves every merge to `main`.
 3. **No secrets in Git.** See [security/SECRET_MANAGEMENT.md](security/SECRET_MANAGEMENT.md).
 4. **Small, reviewable changes.** One concern per pull request.
 

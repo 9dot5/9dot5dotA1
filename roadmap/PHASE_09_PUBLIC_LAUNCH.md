@@ -1,5 +1,7 @@
 # Phase 09 — Public Launch
 
+**Review by:** 2027-01-25
+
 **Status:** Proposed · **Duration:** to be sized · **Gate owner:** Rui Silva (`9dot5`)
 
 ## Objective

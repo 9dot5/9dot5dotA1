@@ -1,5 +1,7 @@
 # Incident Response
 
+**Owner:** Rui Silva (`9dot5`) · **Review by:** 2027-01-25
+
 **Status:** Proposed · **Control:** A.5.24–A.5.28 · **Reference:** NIST SP 800-61r2
 
 ## Severity

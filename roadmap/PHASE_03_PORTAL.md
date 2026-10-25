@@ -1,5 +1,7 @@
 # Phase 03 — Management Portal
 
+**Owner:** Rui Silva (`9dot5`) · **Review by:** 2027-01-25
+
 **Status:** Proposed · **Duration:** 4 weeks · **Related:** ADR-0009, DOMAIN_MODEL.md
 
 ## Objective

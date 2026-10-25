@@ -1,5 +1,7 @@
 # Phase 02 — Security
 
+**Owner:** Rui Silva (`9dot5`) · **Review by:** 2027-01-25
+
 **Status:** Proposed · **Duration:** 3 weeks · **Related:** ADR-0003, ADR-0004
 
 ## Objective

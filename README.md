@@ -1,5 +1,7 @@
 # 9dot5dotA1
 
+**Owner:** Rui Silva (`9dot5`) · **Review by:** 2027-01-25
+
 Platform for knowledge, governance, security, AI and automation, built incrementally
 and driven by return on investment. Infrastructure is an enabler, not the goal.
 

@@ -1,0 +1,50 @@
+﻿{
+    "_comment":  "Registered agent identities (ADR-0011, ADR-0017). status must be \u0027active\u0027 before scripts/start-agent.ps1 starts a session. Keys are private files outside the repository; only public material and names are recorded here.",
+    "agents":  {
+                   "architect":  {
+                                     "status":  "pending",
+                                     "role":  "Drafts ADRs, architecture documents and ROI rows; Proposed only",
+                                     "git_name":  "agent-architect",
+                                     "github_account":  null,
+                                     "git_email":  "architect@agents.9dot5dotA1.invalid",
+                                     "signing_key":  "C:\\ProgramData\\9dot5dotA1\\agent-keys\\architect_ed25519",
+                                     "public_key":  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL8abbGdCvhthGJPGd43HQLlOu8wOlByrrcJ2hvgC46j agent-architect"
+                                 },
+                   "governance-checker":  {
+                                              "status":  "pending",
+                                              "role":  "Read-only checks of ADR metadata, status lifecycle, links and naming",
+                                              "git_name":  "agent-governance-checker",
+                                              "github_account":  null,
+                                              "git_email":  "governance-checker@agents.9dot5dotA1.invalid",
+                                              "signing_key":  "C:\\ProgramData\\9dot5dotA1\\agent-keys\\governance-checker_ed25519",
+                                              "public_key":  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH0y6mEdsjTUhnfzWIor89flHrbVG7LXVyKhJnb8c8Hc agent-governance-checker"
+                                          },
+                   "security-reviewer":  {
+                                             "status":  "pending",
+                                             "role":  "Read-only security review; reports findings, never accepts risk",
+                                             "git_name":  "agent-security-reviewer",
+                                             "github_account":  null,
+                                             "git_email":  "security-reviewer@agents.9dot5dotA1.invalid",
+                                             "signing_key":  "C:\\ProgramData\\9dot5dotA1\\agent-keys\\security-reviewer_ed25519",
+                                             "public_key":  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL598d75EBvTTSR1pgkrqyI9nnDW6EXvGFWoUJZoAAqY agent-security-reviewer"
+                                         },
+                   "docs-maintainer":  {
+                                           "status":  "pending",
+                                           "role":  "Fixes broken links, stale dates and terms; no status changes",
+                                           "git_name":  "agent-docs-maintainer",
+                                           "github_account":  null,
+                                           "git_email":  "docs-maintainer@agents.9dot5dotA1.invalid",
+                                           "signing_key":  "C:\\ProgramData\\9dot5dotA1\\agent-keys\\docs-maintainer_ed25519",
+                                           "public_key":  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOWn/XVv/M60qlnGMgE4K6IpCjwXJwiQa0b0L+VcfwJ5 agent-docs-maintainer"
+                                       },
+                   "executor":  {
+                                    "status":  "pending",
+                                    "role":  "Implements reversible changes on branches and opens pull requests when asked; never merges",
+                                    "git_name":  "agent-executor",
+                                    "github_account":  null,
+                                    "git_email":  "executor@agents.9dot5dotA1.invalid",
+                                    "signing_key":  "C:\\ProgramData\\9dot5dotA1\\agent-keys\\executor_ed25519",
+                                    "public_key":  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL9MJDfo3v1uIgn7nfEtJrBiEETzrhD6SpnzBB+f8Ohc agent-executor"
+                                }
+               }
+}

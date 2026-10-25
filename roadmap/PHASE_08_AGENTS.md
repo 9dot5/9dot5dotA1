@@ -1,5 +1,7 @@
 # Phase 08 — Agents
 
+**Owner:** Rui Silva (`9dot5`) · **Review by:** 2027-01-25
+
 **Status:** Proposed · **Duration:** to be sized · **Related:** AGENT_STRATEGY.md, MCP_STRATEGY.md, ADR-0010
 
 ## Objective

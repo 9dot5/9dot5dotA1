@@ -1,5 +1,7 @@
 # Phase 00 — Governance
 
+**Review by:** 2027-01-25
+
 **Status:** Proposed · **Duration:** 4 weeks · **Gate owner:** Rui Silva (`9dot5`)
 
 ## Objective

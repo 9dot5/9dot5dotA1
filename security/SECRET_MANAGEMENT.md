@@ -1,5 +1,7 @@
 # Secret Management
 
+**Owner:** Rui Silva (`9dot5`) · **Review by:** 2027-01-25
+
 **Status:** Proposed · **Control:** A.5.17, A.8.24
 
 ## What counts as a secret

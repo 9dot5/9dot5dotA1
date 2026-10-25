@@ -1,5 +1,7 @@
 # Vision
 
+**Review by:** 2027-01-25
+
 **Status:** Proposed · **Owner:** Rui Silva (`9dot5`) · **Review:** every 12 months
 
 A personal and team platform where knowledge, governance, security, AI and automation

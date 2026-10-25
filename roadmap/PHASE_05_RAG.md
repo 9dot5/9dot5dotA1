@@ -1,5 +1,7 @@
 # Phase 05 — Retrieval (RAG)
 
+**Owner:** Rui Silva (`9dot5`) · **Review by:** 2027-01-25
+
 **Status:** Proposed · **Duration:** to be sized · **Related:** ADR-0008
 
 ## Objective

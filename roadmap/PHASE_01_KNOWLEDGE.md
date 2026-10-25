@@ -1,5 +1,7 @@
 # Phase 01 — Knowledge
 
+**Owner:** Rui Silva (`9dot5`) · **Review by:** 2027-01-25
+
 **Status:** Proposed · **Duration:** 3 weeks after Phase 00 · **Related:** ADR-0008
 
 ## Objective

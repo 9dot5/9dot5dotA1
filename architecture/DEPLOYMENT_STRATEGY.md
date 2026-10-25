@@ -1,5 +1,7 @@
 # Deployment Strategy
 
+**Owner:** Rui Silva (`9dot5`) · **Review by:** 2027-01-25
+
 **Status:** Proposed · **Related:** ADR-0001 (declarative, cloud agnostic), ADR-0007 (capacity)
 
 ## Principles

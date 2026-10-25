@@ -1,5 +1,9 @@
 # Diagrams
 
+**Review by:** 2027-01-25
+
+**Owner:** Rui Silva (`9dot5`) · **Status:** Proposed
+
 Diagrams are versioned as source (Mermaid or Draw.io XML) next to any exported image, so
 every change to a diagram is reviewable.
 

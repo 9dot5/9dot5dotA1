@@ -1,5 +1,7 @@
 # Phase 06 — Automation
 
+**Owner:** Rui Silva (`9dot5`) · **Review by:** 2027-01-25
+
 **Status:** Proposed · **Duration:** to be sized · **Related:** ADR-0010, AGENT_STRATEGY.md
 
 ## Objective

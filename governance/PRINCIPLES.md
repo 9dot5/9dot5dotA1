@@ -1,5 +1,9 @@
 # Principles
 
+**Owner:** Rui Silva (`9dot5`)
+
+**Review by:** 2027-01-25
+
 **Status:** Proposed. Each principle is recorded in its own ADR where a decision depends on it.
 
 | # | Principle | Meaning in practice | ADR |

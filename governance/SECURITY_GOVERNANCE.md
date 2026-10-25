@@ -1,5 +1,7 @@
 # Security Governance
 
+**Owner:** Rui Silva (`9dot5`) · **Review by:** 2027-01-25
+
 **Status:** Proposed · **Reference:** ISO/IEC 27001:2022 Annex A, OWASP ASVS 4.0.3, NIST SP 800-207 (Zero Trust)
 
 ## Accountability

@@ -1,5 +1,7 @@
 # MCP Strategy
 
+**Owner:** Rui Silva (`9dot5`) · **Review by:** 2027-01-25
+
 **Status:** Proposed · **Related:** ADR-0007, ADR-0010, [security/ACCESS_CONTROL.md](../security/ACCESS_CONTROL.md)
 
 ## Purpose

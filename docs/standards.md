@@ -1,5 +1,9 @@
 # Standards
 
+**Review by:** 2027-01-25
+
+**Owner:** Rui Silva (`9dot5`)
+
 **Status:** Proposed · Applies to every repository in the organisation.
 
 ## 1. Responsibilities

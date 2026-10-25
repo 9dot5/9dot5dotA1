@@ -1,5 +1,7 @@
 # Disaster Recovery
 
+**Owner:** Rui Silva (`9dot5`) · **Review by:** 2027-01-25
+
 **Status:** Proposed · **Control:** A.5.29, A.5.30, A.8.13, A.8.14
 
 ## Objectives

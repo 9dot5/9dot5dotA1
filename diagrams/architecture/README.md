@@ -1,5 +1,7 @@
 # Architecture diagrams
 
+**Owner:** Rui Silva (`9dot5`) · **Status:** Proposed · **Review by:** 2027-01-25
+
 Planned, from TARGET_ARCHITECTURE.md:
 - Layered view (users → edge → portal → services → data → infrastructure).
 - Data flow for a knowledge query, showing the authentication step.

@@ -1,5 +1,9 @@
 # Service Catalogue
 
+**Owner:** Rui Silva (`9dot5`)
+
+**Review by:** 2027-01-25
+
 **Status:** Proposed · **Rule:** a service not listed here is not governed and must not be used.
 
 ## Fields

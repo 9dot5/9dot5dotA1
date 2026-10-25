@@ -1,5 +1,7 @@
 # System Landscape
 
+**Review by:** 2027-01-25
+
 **Status:** Proposed · Describes the current state. Target state is in TARGET_ARCHITECTURE.md.
 
 ## Current state (as of 2026-10-24, from the owner's environment)

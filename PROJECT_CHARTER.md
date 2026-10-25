@@ -1,5 +1,7 @@
 # Project Charter — 9dot5dotA1
 
+**Review by:** 2027-01-25
+
 **Status:** Proposed · **Owner:** Rui Silva (`9dot5`), sole owner · **Review cycle:** every 6 months
 
 ## 1. Purpose
@@ -56,7 +58,7 @@ pattern, not to add services.
 | Architecture | Rui Silva (`9dot5`) (delegable) | ADR approval, target architecture |
 | Security | Rui Silva (`9dot5`) (delegable) | Threat model, security review |
 | Operations | Rui Silva (`9dot5`) | Runbooks, backups, incidents |
-| AI agents | Devin, Claude CLI | Execution and review under human approval |
+| AI agents | Claude Code (architect, reviewer, executor roles) | Execution and review under human approval (ADR-0011) |
 
 ## 7. Governing documents
 

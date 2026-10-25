@@ -1,5 +1,7 @@
 # Threat Model
 
+**Owner:** Rui Silva (`9dot5`) · **Review by:** 2027-01-25
+
 **Status:** Proposed · **Method:** STRIDE per trust boundary, with AI-specific threats · **Reference:** OWASP Top 10, OWASP LLM Top 10, NIST SP 800-207
 
 ## Assets
@@ -30,6 +32,12 @@ See architecture/CONTEXT.md §Trust boundaries. Threats below are mapped to thos
 | T-08 | Shared host exposes data to other users (Information disclosure) | Shared hosts | M | H | Avoid | Do not store personal or secret data on hosts not owned by the platform |
 | T-09 | Agent-generated code with vulnerability merged (Tampering) | Delivery | M | H | Reduce | Security review trigger; SAST in pipeline; human approval |
 | T-10 | Personal data in logs or telemetry (Information disclosure) | Observability | M | M | Reduce | Redaction tests (ADR-0009) |
+| T-11 | Agent acts with the owner's credentials, or its actions cannot be attributed or denied afterwards (Spoofing, Repudiation) | Agent → platform | M | H | Reduce | Registered identity per agent; signed commits; hash-chained audit log exported to monitoring; fail-closed hook (ADR-0017). Residual: hook and log share the owner's OS user until Phase 08 option D |
+| T-12 | Agent edits an accepted decision, a protected file or a status field (Tampering) | Delivery | M | H | Reduce | CLAUDE.md rules; deny rules on CODEOWNERS and LICENSE; `governance-checker` review; owner approval (ADR-0010) |
+| T-13 | Secret manager compromise exposes all runtime secrets (Information disclosure, Elevation) | Data | L | H | Reduce | Audit log; short-lived agent tokens; unseal keys stored apart from backups (ADR-0014) |
+| T-14 | Reverse proxy misconfiguration exposes an admin interface (Elevation) | Edge | M | H | Reduce | No admin port on the public address; configuration in Git; review per service (ADR-0013) |
+| T-15 | Identity provider outage or compromise blocks or grants access (Spoofing, DoS) | Edge | M | H | Reduce | MFA for administrators; offline recovery path; tested restore (ADR-0012) |
+| T-16 | Automation script runs a consequential action without approval (Tampering) | Automation | M | H | Reduce | Classification read-only / reversible / consequential; approval record before run (ADR-0016, ADR-0010) |
 
 ## Review
 

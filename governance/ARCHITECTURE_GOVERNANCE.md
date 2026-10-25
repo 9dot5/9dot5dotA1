@@ -1,5 +1,7 @@
 # Architecture Governance
 
+**Review by:** 2027-01-25
+
 **Status:** Proposed · **Decision authority:** owner, delegable to an architecture lead
 
 ## Architecture Review Process

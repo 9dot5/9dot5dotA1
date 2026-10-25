@@ -1,5 +1,7 @@
 # Glossary
 
+**Owner:** Rui Silva (`9dot5`) · **Status:** Proposed · **Review by:** 2027-01-25
+
 | Term | Definition |
 |---|---|
 | **ADR** | Architecture Decision Record. A recorded decision with context, options and consequences. |

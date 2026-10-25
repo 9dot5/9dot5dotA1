@@ -12,7 +12,7 @@
 | Maintainer | Human, delegated | Merge after review; operate services per runbook | Accept risk; change security baseline |
 | Contributor | Human | Propose changes; read | Merge to `main` |
 | Operator | Human or service | Run approved runbook steps | Change access rules |
-| Agent (per agent type) | AI agent | Actions in AGENT_STRATEGY.md | Merge; accept risk; administrative change |
+| Agent (per agent type) | AI agent | Actions in AGENT_STRATEGY.md; on GitHub, everything except deleting a repository, including merge after checks (ADR-0036) | Delete a repository; accept risk; set an ADR status other than Proposed |
 | Service | Software identity | Its documented interfaces | Anything not in its role |
 
 ## Rules
@@ -32,7 +32,7 @@
 | `governance-checker` (agent) | Agent | pending | 2027-01-24 | As above. Read-only. |
 | `security-reviewer` (agent) | Agent | pending | 2027-01-24 | As above. Read-only. |
 | `docs-maintainer` (agent) | Agent | pending | 2027-01-24 | As above. |
-| `executor` (agent) | Agent | pending | 2027-01-24 | As above. No merge rights. |
+| `executor` (agent) | Agent | pending | 2027-01-24 | As above. May merge after checks (ADR-0036). |
 
 ## Repository protection
 

@@ -13,14 +13,14 @@
 - **Rating**: Critical 20 to 25; High 12 to 19; Medium 6 to 11; Low 1 to 5.
 - **Treatment**: Avoid, Reduce, Transfer or Accept (SECURITY_GOVERNANCE).
 
-**No risk in this register is accepted.** Agents may propose treatments and never accept a risk (ADR-0010 rule 3, CLAUDE.md rule 2). Each "Accept" below is a proposal for the owner. An accepted risk expires after six months (SECURITY_GOVERNANCE).
+**No risk in this register is accepted.** Agents may propose treatments. They never accept a risk on their own; they may record an acceptance only when the owner names it and confirms it in the session (ADR-0010 rule 3, ADR-0037, CLAUDE.md rule 2). Each "Accept" below is a proposal for the owner. An accepted risk expires after six months (SECURITY_GOVERNANCE).
 
 ## 2. Register
 
 | ID | Risk | Cause and evidence | L | I | Score | Rating | Treatment | Control or backlog | Status |
 |---|---|---|---|---|---|---|---|---|---|
 | R-01 | Owner-session actions are not recorded | `~/.9dot5dotA1/audit` absent. ADR-0017 Verification: workspace trust not accepted. Deny rules not verified | 5 | 5 | 25 | Critical | Reduce | B-01 | Open |
-| R-02 | An agent merges into `main` | Apps hold Contents and PR write. Merge-only-by-owner is a convention (CONTRIBUTING sole-owner mode). Not yet tested | 3 | 5 | 15 | High | Reduce | B-03 (ADR-0020) | Open |
+| R-02 | An agent merges a harmful change into `main` | Owner decision 2026-10-25 (ADR-0036): agents may merge after required checks. The risk is no longer an unauthorised merge but a harmful authorised one | 3 | 5 | 15 | High | Reduce | Required checks on `main`, alert on each merge, revert (ADR-0036). B-03 | Open, owner decision |
 | R-03 | Owner GitHub account is taken over | Sole approver and key holder. No threat entry. Recovery path not recorded | 2 | 5 | 10 | Medium | Reduce | B-02, B-13 | Open |
 | R-04 | A credential is committed to Git | `.gitignore` exists (secret patterns, `.env`, `*.pem`, `*.key`, `*.token`, audit sink files; checked 2026-10-25). No secret scanning, no push protection, no pre-commit scan | 3 | 5 | 15 | High | Reduce | B-04 | Open (`.gitignore` done; scanning missing) |
 | R-05 | The agent-account password is exposed | `scripts/setup-agent-runner.ps1` starts a transcript in `%TEMP%` (line 44) and prints the new password with `Write-Host` (lines 82 and 91), so the password is written to the transcript. Checked 2026-10-25: the existing `agent-runner-setup.log` holds only the header, no password. The fix (pause the transcript while the password is shown, delete the transcript at the end) is applied to `scripts/setup-agent-runner.ps1` on 2026-10-25 under an owner-authorised exception to CLAUDE.md. It parses; it has not been run as administrator | 5 | 3 | 15 | High | Reduce | B-17 | Mitigated in code, pending a run and owner review |
@@ -49,14 +49,16 @@
 | R-28 | An orchestrator agent, steered by prompt injection, activates other agents | ADR-0034 lets the orchestrator activate registered identities. T-03 | 3 | 4 | 12 | High | Reduce | Separate OS account, owner ceiling per identity, alert on each activation (ADR-0034) | Open, owner decision |
 | R-29 | Internal data is published in the public repository | `9dot5/9dot5dotA1` is public. Node addresses were in M2M_ARCHITECTURE and were removed before the first push (2026-10-25). Issues and pull requests are public too | 3 | 4 | 12 | High | Reduce | Make the repository private, or scan each change for Internal data before push (B-04) | Open, owner decision |
 | R-30 | A Sigma user or a stolen Grafana Viewer credential reads the infrastructure metrics | ADR-0035 flow F-9 gives Sigma read access to a metrics-only Grafana on PC Alentejo. T-08 | 2 | 3 | 6 | Medium | Reduce | Metrics-only organisation, Viewer role, overlay only, no audit data (ADR-0035) | Open, owner decision |
+| R-31 | A merge made by an agent reaches every host through ansible-pull | ADR-0036 lets agents merge; ADR-0025 makes `main` the host configuration source. T-03, T-09 | 3 | 4 | 12 | High | Reduce | ansible-pull applies only after `ansible-lint` and `--check` pass; alert on each merge; revert and re-run (ADR-0025, ADR-0036) | Open, owner decision |
+| R-32 | An agent records an ADR acceptance the owner did not make | ADR-0037 lets agents write a status change on owner permission. Injected or misread permission (T-03, T-12) | 2 | 5 | 10 | Medium | Reduce | Named permission, automatic check, final owner confirmation, separate commit, alert (ADR-0037) | Open, owner decision |
 
 ## 3. Summary
 
 | Rating | Count | Items |
 |---|---|---|
 | Critical | 1 | R-01 |
-| High | 13 | R-02, R-04, R-05, R-06, R-08, R-10, R-13, R-14, R-21, R-25, R-27, R-28, R-29 |
-| Medium | 16 | R-03, R-07, R-09, R-11, R-12, R-15, R-16, R-17, R-18, R-19, R-20, R-22, R-23, R-24, R-26, R-30 |
+| High | 14 | R-02, R-04, R-05, R-06, R-08, R-10, R-13, R-14, R-21, R-25, R-27, R-28, R-29, R-31 |
+| Medium | 17 | R-03, R-07, R-09, R-11, R-12, R-15, R-16, R-17, R-18, R-19, R-20, R-22, R-23, R-24, R-26, R-30, R-32 |
 | Low | 0 | — |
 
 Scores are estimates. The first-week items in [PRIORITY_MATRIX.md](PRIORITY_MATRIX.md) reduce R-01, R-04, R-05 and part of R-06. R-21 needs an owner decision, not more work.
@@ -75,3 +77,5 @@ Scores are estimates. The first-week items in [PRIORITY_MATRIX.md](PRIORITY_MATR
 | 2026-10-25 | R-04 and R-05 re-checked against the working tree. Line references corrected (the script has 162 lines). R-05 patch drafted outside the repository for owner review | Session draft, not a registered agent identity (see CLAUDE.md). Owner to review |
 | 2026-10-25 | R-28 (orchestrator, ADR-0034) and R-29 (public repository) added | Session draft, not a registered agent identity. Owner to review |
 | 2026-10-25 | R-30 (Sigma read access to Grafana, ADR-0035) added. R-12 now depends on PC Alentejo instead of Dynatrace if ADR-0035 is accepted | Session draft. Owner to review |
+| 2026-10-25 | R-02 restated after ADR-0036 (agents may merge after checks). R-31 added | Session draft. Owner to review |
+| 2026-10-25 | R-32 added (ADR-0037, agents record owner decisions). The note in section 1 that agents never accept a risk now reads with ADR-0037 | Session draft. Owner to review |

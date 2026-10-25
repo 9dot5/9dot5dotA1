@@ -49,5 +49,5 @@ pull request. In this mode:
 
 - Branch protection requires pull requests and passing status checks, with **0** required approvals.
 - The owner's explicit merge decision, after the checks pass and the review checklist is complete, is the human approval required by ADR-0010.
-- Agent-authored pull requests are merged only by the owner, never by the agent.
+- Agent-authored pull requests may be merged by the agent once the required checks pass (ADR-0036, 2026-10-25). The owner is alerted on each merge and can revert it.
 - When a second maintainer joins, raise the required approvals to 1 and update CODEOWNERS in the same change.

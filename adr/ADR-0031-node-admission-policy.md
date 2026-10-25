@@ -43,7 +43,7 @@ Operations MCP cannot communicate with any node while any of these is false:
 
 The gate is enforced in code (`ops_mcp/gate.py`). A gated call is refused and audited, and no approval is created for it. Local capabilities (`get_nodes`, `search_adr`) and external knowledge sources are not gated. Reading `get_alerts` or `get_incidents` is gated, because those sources read from nodes.
 
-An agent cannot open the gate: the ADR status is accepted only by the owner, and `config/gate.json` is part of the owner's review.
+An agent cannot open the gate: an ADR status is accepted only by the owner, or recorded by an agent on the owner's named and confirmed decision (ADR-0037), and `config/gate.json` is part of the owner's review, which agents never write.
 
 ### Part C. Lab PCs behind Sigma
 

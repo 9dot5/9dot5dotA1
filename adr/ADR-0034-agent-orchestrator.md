@@ -30,7 +30,7 @@ Assumption: GitHub (issues, branches, pull requests) is reachable by outbound HT
 3. **The orchestrator may activate, suspend and start the other registered identities.** It changes their state from `pending` or `suspended` to `active`, or back, and starts their sessions with `scripts/start-agent.ps1`. It may not:
    - create a new identity, change an identity's role, key, Git author or GitHub App;
    - activate an identity that the owner has set to `revoked`;
-   - grant merge rights, accept a risk, or change an ADR status (ADR-0010, CLAUDE.md rule 2);
+   - accept a risk, or change an ADR status (ADR-0010, CLAUDE.md rule 2);
    - edit `.claude/**`, `scripts/**`, the audit directory or its own permissions.
 4. **Activation state lives outside the repository, in a file only the orchestrator can write.** `C:\ProgramData\9dot5dotA1\activations.json` holds one entry per identity: state, by whom, when, reason. The owner-controlled registry (`.claude/agent-identities.json`) keeps the identity definitions and a ceiling per identity (`max_state`: `active` or `pending`). `start-agent.ps1` starts a session only when both the registry ceiling and the activation file allow it.
 5. **The orchestrator runs under its own operating-system account, `agent-orchestrator`.** Only that account and the owner can write `activations.json`. The `agent-runner` account can read it. Without this separation, any agent could activate any other (R-11), so this part is a precondition, not an option.

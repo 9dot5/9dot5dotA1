@@ -9,16 +9,13 @@
       "Bash(git branch --show-current)"
     ],
     "deny": [
-      "Bash(git push:*)",
-      "Bash(git merge:*)",
-      "Bash(git rebase:*)",
       "Bash(git reset --hard:*)",
       "Bash(git clean:*)",
       "Bash(git checkout -- :*)",
       "Bash(git restore:*)",
-      "Bash(gh pr merge:*)",
-      "Bash(gh pr close:*)",
       "Bash(gh repo delete:*)",
+      "Bash(gh auth refresh -s delete_repo:*)",
+      "Bash(gh auth refresh --scopes delete_repo:*)",
       "Bash(rm:*)",
       "Edit(CODEOWNERS)",
       "Edit(LICENSE)",

@@ -18,13 +18,16 @@ The GitHub App proves the API actions: pull requests, comments, checks.
 | `9dot5-governance-checker` | `governance-checker` | Contents: read; Pull requests: read; Checks: read and write; Metadata: read | none | `9dot5dotA1` only |
 | `9dot5-security-reviewer` | `security-reviewer` | Contents: read; Pull requests: read and write (comments only); Security events: read; Metadata: read | none | `9dot5dotA1` only |
 | `9dot5-docs-maintainer` | `docs-maintainer` | Contents: read and write; Pull requests: read and write; Metadata: read | none | `9dot5dotA1` only |
-| `9dot5-executor` | `executor` | Contents: read and write; Pull requests: read and write; Checks: read; Metadata: read | none | `9dot5dotA1` only |
+| `9dot5-executor` | `executor` | Contents: read and write; Pull requests: read and write; Issues: read and write; Actions: read and write; Workflows: read and write; Checks: read; Administration: read; Metadata: read | none | `9dot5dotA1` only |
+| `9dot5-orchestrator` | `orchestrator` (ADR-0034) | As `executor` | none | `9dot5dotA1` only |
 
 ## Rules that apply to every app
 
-1. No app has **Administration**, **Workflows**, **Secrets**, **Environments** or **Members** permission.
-   Merges are done by the owner (ADR-0010), so no app can merge: "Contents: write" allows pushes to
-   branches, and branch protection on `main` is set so that apps cannot push to it.
+1. No app has **Administration: write**, **Secrets**, **Environments** or **Members** permission. Agents may
+   merge pull requests once the required checks pass (ADR-0036). On GitHub, Administration write is the
+   permission that allows deleting a repository, and it cannot be split from changing settings, so no app
+   holds it. Repository settings (branch protection, rulesets, visibility) are changed through the owner's
+   `gh` login, whose token has no `delete_repo` scope.
 2. No app is installed on any repository other than `9dot5dotA1`.
 3. Private keys are generated in GitHub, downloaded once, and stored under `C:\ProgramData\9dot5dotA1\github-apps\`
    with read access for the agent account only. They are never committed or pasted into chat.

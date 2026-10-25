@@ -1,6 +1,6 @@
 # ADR-0038: Repository administration stays with the owner
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Date:** 2026-10-25
 - **Deciders:** Rui Silva (`9dot5`)
 - **Review by:** 2027-04-25
@@ -19,9 +19,10 @@ Facts:
 ## Decision
 
 1. **Agents manage the repository's content and work.** They may commit, push branches, open, review, merge and close pull requests, delete branches other than `main`, manage issues, labels, milestones and releases, edit workflow files under `.github/workflows/`, and run or re-run Actions workflows.
-2. **Administration is owner-only.** Agents do not change: repository settings, visibility, name or description; branch protection and rulesets; collaborators, teams and permissions; Actions secrets and variables; webhooks, deploy keys and environments; GitHub App installations; archiving or transferring the repository. Deletion stays forbidden (ADR-0036 decision 2).
+1a. **Agents may also archive, unarchive, rename and transfer a repository** (owner decision, 2026-10-25). A transfer goes only to the owner's own account or to an organisation the owner owns; a transfer anywhere else is not permitted, because it removes the owner's control and cannot be undone without the receiver.
+2. **Other administration is owner-only.** Agents do not change: repository settings, visibility or description; branch protection and rulesets; collaborators, teams and permissions; Actions secrets and variables; webhooks, deploy keys and environments; GitHub App installations. Deletion stays forbidden (ADR-0036 decision 2).
 3. **When an agent needs an administration change, it asks the owner** and gives the exact change and the command or setting. It does not make the change itself.
-4. **Enforcement.** Claude Code denies `gh repo edit`, `gh repo archive`, `gh repo rename`, `gh repo delete`, `gh secret` and `gh variable`. GitHub Apps for agents have no Administration write. Until the Apps exist, sessions use the owner's login, so administration through `gh api` is blocked by rule only. Recorded as R-33.
+4. **Enforcement.** Claude Code denies `gh repo edit`, `gh repo delete`, `gh secret` and `gh variable`. Archive, rename and transfer are allowed by decision 1a; each is an audited tool call and the owner is alerted. GitHub Apps for agents have no Administration write. Until the Apps exist, sessions use the owner's login, so administration through `gh api` is blocked by rule only. Recorded as R-33.
 5. **The branch protection set on 2026-10-25 stays as the owner's setting.** The owner may keep or change it.
 6. **This supersedes ADR-0036 decisions 1 and 4 for administration.** The rest of ADR-0036 stands: agents push and merge after the required checks, and repository deletion is blocked.
 
@@ -46,4 +47,11 @@ Score for A is an estimate. Values: value 4, frequency 4, cost 4, risk 4, revers
 
 - Trust boundaries: TB-1 (agent to repository). Narrows ADR-0036: agents change content, not the controls around it.
 - Controls: deny rules; Apps without Administration write; owner review of every administration change.
-- Threats: T-09 (tampering with `main` protection). Residual: R-33 until GitHub Apps replace the owner's login for agents.
+- Threats: T-09 (tampering with `main` protection). Residual: R-33 until GitHub Apps replace the owner's login for agents, and R-34 for archive, rename and transfer.
+
+## Change history
+
+| Date | Change | By |
+|---|---|---|
+| 2026-10-25 | Decision 1a added on the owner's instruction: agents may archive, rename and transfer (transfer only to the owner's account or organisations) | Owner decision, drafted by an unregistered Claude Code session |
+| 2026-10-25 | Accepted, with residual risks R-33 and R-34. ADR-0037 double check: automatic check passed (the contradiction with ADR-0036 decisions 1 and 4 is the declared partial supersession); owner confirmed in the session ("Sim") together with decision 1a | Owner decision, recorded by an unregistered Claude Code session (no `AGENT_ID`, see R-01) |

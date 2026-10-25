@@ -12,7 +12,7 @@
 | Maintainer | Human, delegated | Merge after review; operate services per runbook | Accept risk; change security baseline |
 | Contributor | Human | Propose changes; read | Merge to `main` |
 | Operator | Human or service | Run approved runbook steps | Change access rules |
-| Agent (per agent type) | AI agent | Actions in AGENT_STRATEGY.md; on GitHub, manage content and work, including merge after checks (ADR-0036) | Administer or delete a repository (ADR-0038); accept risk on its own; set an ADR status without the owner's named decision (ADR-0037) |
+| Agent (per agent type) | AI agent | Actions in AGENT_STRATEGY.md; on GitHub, manage content and work, including merge after checks (ADR-0036) | Delete a repository; administer it beyond archive, rename and transfer to the owner (ADR-0038); accept risk on its own; set an ADR status without the owner's named decision (ADR-0037) |
 | Service | Software identity | Its documented interfaces | Anything not in its role |
 
 ## Rules

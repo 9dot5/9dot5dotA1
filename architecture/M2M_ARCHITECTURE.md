@@ -202,7 +202,7 @@ Explanation of the tiers:
 
 | Node | Role | Trust | Access by OG | Allowed services | Data allowed |
 |---|---|---|---|---|---|
-| **PC Alentejo** (`DESKTOP-Q3GOUP4`) | Windows workstation, personal user `yau` | Owner-controlled? **to confirm** (the user account is not the owner's) | Restricted SSH key, forced command, Windows OpenSSH | Read status, health, services, logs. Restart only after approval | Internal only. No secrets, no personal data from the owner's accounts |
+| **PC Alentejo** (`DESKTOP-Q3GOUP4`) | Windows workstation, user `yau` | **Owned.** The owner controls the host and the `yau` account (owner statement, 2026-10-25) | Restricted SSH key, forced command, Windows OpenSSH | Read status, health, services, logs. Restart only after approval | Internal only. No secrets, no personal data from the owner's accounts |
 | **Sigma** (`sigma04.ist.utl.pt`) | Monitoring centre (owner decision, 2026-10-25). Bridge to the CSHP lab PCs. No root for the owner, so nothing is installed with system rights | Shared, not owned (T-08) | Read-only health and metrics, pushed by nodes (TB-5). No writes through OG until C-5 and C-6 are decided. Hops to lab PCs only by named entry (C-6) | User-space monitoring that needs no root. Scheduled jobs with no personal data | Health, metrics and non-personal status only (C-5 option a). Audit records and secrets stay off Sigma |
 | **LSD2** | **Unknown** | **Unknown** (Q1) | Not allowed until identified | None | None |
 | **Legion-9dot5** | Development | Not a production node | Not an adapter target | None | Repository only |
@@ -210,7 +210,7 @@ Explanation of the tiers:
 
 Two notes:
 
-- The PC Alentejo user account `yau` is not the owner's. Whether the owner controls the machine is not recorded. Until it is recorded, it is treated as a shared host under T-08. **Owner decision needed.**
+- PC Alentejo and its user account `yau` belong to the owner (owner statement, 2026-10-25). Its ownership class under ADR-0031 Part A is `owned`. It is not yet admitted: the other admission conditions are still open.
 - Sigma holds an SSH key on this PC (`id_sigma`). Under this design, that direct key use is replaced by OG. Revoke the direct path once OG exists.
 
 ## 10. Service catalogue (proposed entries)
@@ -261,7 +261,7 @@ Also required, not as ADRs: update `architecture/MCP_STRATEGY.md` (OPS-MCP is th
 1. **LSD2**: what is it, who runs it, and is it ours? Until answered, it is excluded.
 2. **Sigma**: may the platform push metrics from Sigma, or is Sigma manual-only?
 3. **Overlay (`100.x`)**: which product provides it, and does it hold the owner's keys? It needs its own ADR (ADR-0034).
-4. **PC Alentejo**: is it owner-controlled? The user account `yau` is not the owner's.
+4. **PC Alentejo**: answered 2026-10-25. The host and the `yau` account are the owner's (ownership class `owned`).
 5. **C-1 to C-4**: decide the four conflicts in §2.
 6. **Approval channel**: is approval through Authentik acceptable as the owner's out-of-band step, or do you want a second channel (for example a phone prompt)?
 

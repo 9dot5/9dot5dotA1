@@ -12,7 +12,7 @@ Operations MCP can reach nodes. Before this ADR, the only control on a node was 
 
 The owner has three candidate nodes and one unknown:
 
-- PC Alentejo (`DESKTOP-Q3GOUP4`, user `yau`): reached by SSH. Ownership of the user account is not recorded.
+- PC Alentejo (`DESKTOP-Q3GOUP4`, user `yau`): reached by SSH. The owner stated on 2026-10-25 that the host and the `yau` account are the owner's, so its ownership class is `owned`. It is not admitted until the other Part A conditions are recorded.
 - Sigma: shared university server, now the monitoring centre (ADR-0030).
 - CSHP lab PCs: more machines behind Sigma. Not owned. ADR-0007 says "not ours to load".
 - LSD2: not identified (M2M Q1).

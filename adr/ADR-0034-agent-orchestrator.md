@@ -16,7 +16,7 @@ Facts:
 - All agent sessions share the operating-system account `agent-runner` (R-11). Anything one agent session can write, every other agent session can write too.
 - No agent session can start today: every identity is `pending`, the audit sink is not configured, and the agent account has no Claude Code login.
 - ADR-0029 forbids agents from opening SSH, API or console sessions to a node. ADR-0033 rule 6 forbids agents from using break-glass paths. TB-4 denies node-to-node traffic by default.
-- PC Alentejo (`DESKTOP-Q3GOUP4`) is a candidate node under ADR-0031. Its ownership class is not recorded: the user account `yau` is not the owner's.
+- PC Alentejo (`DESKTOP-Q3GOUP4`) is a candidate node under ADR-0031. The owner stated on 2026-10-25 that the host and its user account `yau` are the owner's: ownership class `owned`.
 - The repository `9dot5/9dot5dotA1` exists on GitHub and is public.
 
 Assumption: GitHub (issues, branches, pull requests) is reachable by outbound HTTPS from both hosts. Not verified on PC Alentejo.
@@ -63,7 +63,7 @@ Score for A is an estimate. Values: value 4, frequency 4, cost 3, risk 3, revers
 - Negative: amends ADR-0017 rule 7 and AGENT_IDENTITIES step 5 for the orchestrator only. Both are Proposed, so they are revised with this ADR rather than superseded.
 - Follow-up: owner adds the `orchestrator` identity and the `max_state` ceilings to `.claude/agent-identities.json`.
 - Follow-up: owner extends `scripts/setup-agent-runner.ps1` (account `agent-orchestrator`, permissions on `activations.json`) and `scripts/start-agent.ps1` (read the activation file). Agents may not edit `scripts/**`.
-- Follow-up: owner records the ownership class of PC Alentejo (ADR-0031 Part A) before Part B starts.
+- Follow-up: ownership class of PC Alentejo recorded as `owned` (2026-10-25). The remaining ADR-0031 Part A conditions (access record, data class, capacity, review date) are recorded before Part B starts.
 - Follow-up: an activation alert in MONITORING_STRATEGY and a runbook RB-agent-activation.
 
 ## Security and compliance notes

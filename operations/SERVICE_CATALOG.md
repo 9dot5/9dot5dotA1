@@ -21,7 +21,7 @@ runbook link, ADR link, last review date.
 | Prometheus | Metrics store (ADR-0009 signals) | PC Alentejo | Production (planned) | Rui Silva | Internal: loopback only | Internal (metrics) | RB-host-resources | ADR-0035 | 2026-10-25 |
 | Grafana | Metrics dashboards; Sigma view (F-10) | PC Alentejo | Production (planned) | Rui Silva | Internal: loopback now; overlay with TLS for F-10 | Internal (metrics) | to write | ADR-0035 | 2026-10-25 |
 
-Status of the entries above: defined in `ansible/roles/monitoring`, not installed. Installation waits for ADR-0035 acceptance and the capacity measurement.
+Status of the entries above: defined in `ansible/roles/monitoring`, not installed. ADR-0035 is accepted and the Phase 00 exception recorded (2026-10-25); installation waits for the capacity measurement.
 
 ## Hosts
 

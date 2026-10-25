@@ -5,7 +5,7 @@
 
 Host configuration for owner-controlled hosts. Each host applies its own configuration: a runner container on the host clones this repository and runs `ansible-playbook` against the host's Podman. No host connects to another to configure it.
 
-**Not applied yet.** Nothing here has run on PC Alentejo. Before the first run, ADR-0025 and ADR-0035 are accepted and the memory use of the stack is measured (ADR-0035 decision 7).
+**Not applied yet.** Nothing here has run on PC Alentejo. ADR-0025 and ADR-0035 are accepted and the Phase 00 exception is recorded (2026-10-25). Before the first run, the memory use of the stack is measured (ADR-0035 decision 7).
 
 ## Layout
 

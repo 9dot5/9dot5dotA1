@@ -35,7 +35,7 @@ An identity is `pending` until every step below is done. `start-agent.ps1` refus
    yearly. Installation tokens expire within one hour (SECRET_MANAGEMENT rotation table).
 5. Revocation: set the identity's status to `revoked`, remove the public key from `allowed_signers`, delete
    the App's installation, and record the date and reason in the access register.
-6. Agent identities may merge pull requests once the required checks pass, and may perform every other GitHub action except deleting a repository (ADR-0036). No agent token or App has the `delete_repo` scope or Administration write.
+6. Agent identities may merge pull requests once the required checks pass, and manage the repository's content and work (ADR-0036). Repository administration is the owner's (ADR-0038). No agent token or App has the `delete_repo` scope or Administration write.
 7. The agent account can modify the repository but not `.claude/`, `scripts/`, `.git/hooks`, `.git/config`,
    `CLAUDE.md`, `CODEOWNERS` or `LICENSE`. Changes to those are made by the owner.
 

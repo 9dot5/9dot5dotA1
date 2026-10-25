@@ -5,7 +5,7 @@
 
 Host configuration for owner-controlled hosts. Each host applies its own configuration: a runner container on the host clones this repository and runs `ansible-playbook` against the host's Podman. No host connects to another to configure it.
 
-**Not applied yet.** Nothing here has run on PC Alentejo. ADR-0025 and ADR-0035 are accepted and the Phase 00 exception is recorded (2026-10-25). Before the first run, the memory use of the stack is measured (ADR-0035 decision 7).
+**Applied on PC Alentejo on 2026-10-25** (first run, break-glass under ADR-0039): ok=20, changed=12, failed=0. All four services are up on `127.0.0.1`. ADR-0025 and ADR-0035 are accepted and the Phase 00 exception is recorded. The memory limits in `roles/monitoring/defaults/main.yml` come from the measurement made on that run (ADR-0035 decision 7).
 
 ## Layout
 
@@ -45,10 +45,10 @@ Host configuration for owner-controlled hosts. Each host applies its own configu
 | No TLS on Elasticsearch, Kibana or Grafana | Ports are loopback only; TLS comes with the reverse proxy | ADR-0013 reverse proxy |
 | Grafana is not yet reachable from Sigma (flow F-10) | Needs the overlay listener and TLS | Same as above |
 | Agents on Legion cannot ship audit records to this Elasticsearch yet | That needs flow F-11 over TLS; the ingest key must not travel in clear (R-07) | Same as above |
-| `host.containers.internal` may resolve to the Podman machine, not Windows | Not verified on a WSL-based Podman machine | Check on first run; set `monitoring_prometheus_windows_exporter_target` |
+| No Windows host metrics | Confirmed on the first run (2026-10-25): `host.containers.internal` resolves to the Podman network gateway inside the WSL VM (10.89.0.1), not to Windows, and `windows_exporter` is not installed | Install `windows_exporter`, then point `monitoring_prometheus_windows_exporter_target` at the Windows host as the WSL VM sees it |
 | No audit retention policy (12 months, ADR-0017) | Needs an index lifecycle with rollover | Follow-up in the role |
 | No scheduled runs | First run is manual | Windows Task Scheduler entry, in a later change |
-| Memory limits are estimates | Not measured on PC Alentejo | Measure, then set the defaults |
+| Memory limits are from one idle measurement | Measured on PC Alentejo on 2026-10-25, with no audit traffic yet | Measure again under load and adjust |
 
 ## Checks
 

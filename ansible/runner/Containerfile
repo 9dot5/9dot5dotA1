@@ -1,0 +1,20 @@
+# Ansible control node for ansible-pull on a host that runs Podman (ADR-0025).
+# It drives the host's Podman through the socket mounted at /run/podman/podman.sock.
+FROM docker.io/library/python:3.13-slim-trixie@sha256:d98cc29d3266e535dd9da1099688d9cb3ca4753813571e071763d17725460962
+
+ARG ANSIBLE_CORE_VERSION=2.21.5
+ARG PODMAN_COLLECTION_VERSION=1.21.2
+
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends git podman ca-certificates \
+ && rm -rf /var/lib/apt/lists/*
+
+RUN pip install --no-cache-dir "ansible-core==${ANSIBLE_CORE_VERSION}" \
+ && ansible-galaxy collection install --collections-path /usr/share/ansible/collections \
+      "containers.podman:==${PODMAN_COLLECTION_VERSION}"
+
+# Setting CONTAINER_HOST makes the podman client talk to the host's service (remote mode).
+ENV CONTAINER_HOST=unix:///run/podman/podman.sock \
+    ANSIBLE_COLLECTIONS_PATH=/usr/share/ansible/collections
+
+WORKDIR /work

@@ -17,6 +17,10 @@
 | Agent audit chain | Verification result and head hash, per export | Chain broken, head missing for more than 24 hours, or export failed | Operator | RB-agent-audit-ship (to be written) |
 | Agent identity use | Sessions started without an active identity; tool calls blocked by the audit hook | Any occurrence | Operator | RB-agent-audit-ship (to be written) |
 | Agent actions on protected paths | Tool calls that touch CODEOWNERS, LICENSE, `.claude/**`, `scripts/**` | Any attempt, even if denied | Owner | RB-agent-audit-ship (to be written) |
+| Agent activation | An identity activated, suspended or started by the orchestrator (ADR-0034) | Any occurrence | Owner | RB-agent-activation (to be written) |
+| Governance decisions recorded by agents | An ADR status change or risk acceptance written by an agent (ADR-0037) | Any occurrence | Owner | none needed: review the commit |
+| Agent actions on GitHub | Merge to `main` (ADR-0036); archive, rename or transfer (ADR-0038); any denied administration call (R-33) | Any occurrence | Owner | none needed: review, revert if wrong |
+| Audit sink availability | Elasticsearch on PC Alentejo answering the ingest endpoint (ADR-0035) | Down for 5 minutes (agents are blocked while it is down) | Operator | RB-agent-audit-ship (to be written) |
 
 The three agent signals come from the audit log described in [ADR-0017](../adr/ADR-0017-agent-audit-logging.md).
 They are monitored from the moment the first agent identity is active.

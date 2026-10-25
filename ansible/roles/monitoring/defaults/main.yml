@@ -1,0 +1,41 @@
+---
+# Images pinned by digest (ADR-0035 follow-up). Tags are for reading only; the digest is what is pulled.
+monitoring_images:
+  elasticsearch: docker.io/library/elasticsearch:9.5.5@sha256:da9e6fed4949f114c526cf51f5130fed9e30fe9f03a2ea7bf64ccbdc129fca8c
+  kibana: docker.io/library/kibana:9.5.5@sha256:efaa230392c0a524ce2e06c003ad2620f2c2ffa0ec4d20791aa2d4884b7c4586
+  prometheus: docker.io/prom/prometheus:v3.15.1@sha256:fa3302279710be2f21a8301ec17a8b4f2301fd829bd113839b3b6b02b6f191a2
+  grafana: docker.io/grafana/grafana:13.2.4@sha256:dbbc38ea21103cefb50396340cd88afec779c7e070b0a7bf5a75b4ce46651d3f
+
+monitoring_network: monitoring
+# The runner joins monitoring_network, so it reaches Elasticsearch by container name.
+monitoring_es_url: http://elasticsearch:9200
+
+# Paths as the Podman machine sees them. On Windows, C:\ProgramData is /mnt/c/ProgramData.
+# The runner mounts both at the same paths, so Ansible and Podman agree on them.
+monitoring_root: /mnt/c/ProgramData/9dot5dotA1/monitoring
+monitoring_secrets_dir: /mnt/c/ProgramData/9dot5dotA1/monitoring-secrets
+
+# Every interface listens on the host's loopback only (ADR-0035 decision 6).
+# Overlay exposure for Sigma (flow F-10) and for agent audit (F-11), with TLS, come with the reverse proxy (ADR-0013).
+monitoring_bind_address: 127.0.0.1
+monitoring_ports:
+  elasticsearch: 9200
+  kibana: 5601
+  prometheus: 9090
+  grafana: 3000
+
+# Memory limits. Not measured yet on PC Alentejo (ADR-0035 decision 7): set from measurement.
+monitoring_elasticsearch_heap: 1g
+monitoring_elasticsearch_memory: 2g
+monitoring_kibana_memory: 1g
+monitoring_prometheus_memory: 512m
+monitoring_grafana_memory: 256m
+
+monitoring_prometheus_retention: 30d
+# windows_exporter runs on the Windows host, outside Podman (installed by the owner).
+monitoring_prometheus_windows_exporter_target: host.containers.internal:9182
+
+# Agent audit index (ADR-0017, ADR-0018). The ingest key may only create documents there.
+monitoring_audit_index: agent-audit
+monitoring_audit_writer_role: agent_audit_writer
+monitoring_audit_token_file: "{{ monitoring_secrets_dir }}/audit-sink.token"

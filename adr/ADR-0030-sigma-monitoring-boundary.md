@@ -29,6 +29,7 @@ Assumption: the university administrators can read files and processes owned by 
 5. **Hops from Sigma to lab PCs are out of scope of this ADR.** They are governed by ADR-0031: each lab PC is admitted by name, one at a time, and is disabled until admitted.
 6. **Sigma's monitoring is user-space and uses no privilege.** If a monitoring tool needs root or a system service, it is not installed on Sigma and the signal is taken from the node instead.
 7. **Revocation.** If the university changes the terms of use, or an administrator objects, the owner stops the push and removes Sigma from the registry in one commit. No other component depends on Sigma.
+8. **Sigma may read one metrics-only Grafana view on PC Alentejo** (flow F-10, [ADR-0035](ADR-0035-alentejo-monitoring-stack.md), added 2026-10-25). It is read-only, over the private overlay, with a Viewer account, and holds no audit data. It opens no path from Sigma to any other service or node, so rule 4 still holds.
 
 ## Options considered
 

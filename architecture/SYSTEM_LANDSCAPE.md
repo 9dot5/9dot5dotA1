@@ -14,6 +14,7 @@
 | Desktop control plane | Windows desktop, remote-control enabled | Operator workstation | Active |
 | Laptop | Windows, 8 GB RAM | Development | Active; capacity-limited |
 | WSL distribution | Local laptop | Container experiments | Under migration to Podman on Windows |
+| PC Alentejo (`DESKTOP-Q3GOUP4`) | Owner's desktop, user `yau` (owned, ADR-0031) | Planned monitoring host (ADR-0035) and second agent host (ADR-0034); runs Ollama | Active; not admitted to Operations MCP yet |
 
 ## Gaps against the target
 

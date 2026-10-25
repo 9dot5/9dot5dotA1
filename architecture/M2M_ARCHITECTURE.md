@@ -195,8 +195,10 @@ Explanation of the tiers:
 | F-5 Manual procedure | OG → owner (procedure text) → owner executes → owner records result | Ticket or Confluence page | Owner | Procedure, result, time |
 | F-6 Telemetry | Node → sink | HTTPS push | Write-only sink token | Shipped records |
 | F-7 Workflow | Scheduler → OG → node | As F-3 | Workflow identity, commit SHA pinned | Run id, commit SHA |
-| F-8 Node to node | Alentejo ↔ Sigma ↔ LSD2 | **None declared** | – | Attempt blocked, alert (TB-4) |
+| F-8 Node to node | Alentejo ↔ Sigma ↔ LSD2 | **None declared**, except F-10 below | – | Attempt blocked, alert (TB-4) |
 | F-9 Repository and work tracking | Claude CLI → GitHub, Jira, Confluence, Rovo | HTTPS, API | GitHub App, scoped API token | Per SaaS audit log, linked by run id |
+| F-10 Sigma monitoring view | Sigma → Grafana on PC Alentejo | HTTPS over the private overlay, read-only | Grafana Viewer account, metrics-only organisation | Grafana access log (ADR-0035) |
+| F-11 Agent audit shipping | Agent hosts (Legion, PC Alentejo) → Elasticsearch on PC Alentejo | HTTPS; loopback on PC Alentejo itself | Write-only ingest key (`agent_audit_writer`) | The record is the audit record (ADR-0017, ADR-0035) |
 
 ## 9. Node profiles
 

@@ -20,6 +20,8 @@
 | Secrets store | Secret manager | On every change, plus daily | 12 months | 2 (one offline) | Yearly |
 | Identity provider configuration | Identity service | Daily | 12 months | 2 | Quarterly (Phase 04+) |
 | Service data | Each service | Per service runbook | Per classification | 3 | Quarterly |
+| Agent audit records | Elasticsearch `agent-audit*` on PC Alentejo (ADR-0035) | Daily snapshot, plus head-hash export | 12 months (ADR-0017) | 3, one off PC Alentejo | Quarterly; first test before agents go live |
+| Monitoring configuration | Grafana data volume; secrets in `C:\ProgramData\9dot5dotA1\monitoring-secrets` | Weekly; secrets on change | 12 months | 2, one offline; secrets encrypted | Yearly |
 
 ## Procedures
 

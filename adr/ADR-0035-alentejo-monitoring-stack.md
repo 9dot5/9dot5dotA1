@@ -34,8 +34,9 @@ Facts:
 2. **Elasticsearch becomes the audit sink.** `audit-sink.json` uses `kind: elastic` with the Elasticsearch endpoint on PC Alentejo, and a write-only API key limited to creating documents in `agent-audit` (ADR-0018 decision 4). This revises ADR-0018 decision 2: Dynatrace is not adopted as the record of record.
 3. **Dynatrace is not adopted.** It cannot run on PC Alentejo. If the owner later wants it, it is a SaaS tenant with an ActiveGate container on PC Alentejo, recorded as a proprietary exception (ADR-0006 rule 2) in a new ADR.
 4. **The interface for Sigma is Grafana, read-only, metrics only.** Sigma reaches one Grafana organisation that holds only the ADR-0009 signals, with a Viewer account. Kibana and Elasticsearch are never reachable from Sigma, because they hold audit records (ADR-0030 rules 1 and 2).
-5. **A declared flow, F-9: Sigma to Grafana on PC Alentejo**, HTTPS, over the private overlay only, read-only. It is the only exception to TB-4 for Sigma, and it gives Sigma no path to any other service or node. This adds to ADR-0030, which so far only allowed nodes to push to Sigma.
-6. **Nothing is exposed on the public address of PC Alentejo.** All four components listen on the overlay or on localhost only.
+5. **A declared flow, F-10: Sigma to Grafana on PC Alentejo**, HTTPS, over the private overlay only, read-only. It is the only exception to TB-4 for Sigma, and it gives Sigma no path to any other service or node. This adds to ADR-0030, which so far only allowed nodes to push to Sigma.
+5a. **A declared flow, F-11: agent hosts to the audit sink.** Agent sessions on Legion and on PC Alentejo send audit records to Elasticsearch on PC Alentejo, HTTPS only, with the write-only ingest key. On PC Alentejo itself the hook may use the loopback address. Legion's agents ship over the overlay only once TLS is in place (R-07): until then they stay blocked by the fail-closed hook.
+6. **Nothing is exposed on the public address of PC Alentejo.** All four components listen on the overlay or on localhost only. The first version (`ansible/roles/monitoring`) publishes on localhost only; the overlay listeners for F-10 and F-11 come with the reverse proxy and TLS (ADR-0013).
 7. **Preconditions before installation.** The owner records an exception to the FIRST_4_WEEKS rule for this stack; the memory and disk use of the four containers is measured on PC Alentejo alongside Ollama (DEPLOYMENT_STRATEGY principle 3); and the services are added to SERVICE_CATALOG.
 
 ## Options considered
@@ -56,12 +57,13 @@ Score for A is an estimate. Values: value 5, frequency 4, cost 3, risk 3, revers
 - Negative: if PC Alentejo is down, the audit sink is down and every agent stops (fail closed, R-12). Mitigation: Grafana alerting on sink availability; a runbook for an outage (RB-agent-audit-ship).
 - Negative: Elasticsearch needs several gigabytes of memory. Mitigation: heap limit set in the role; measured before installation; OpenSearch with a smaller heap as fallback.
 - Follow-up: Ansible role `monitoring` (ADR-0025) with pinned image digests.
-- Follow-up: amend ADR-0030 with flow F-9, and M2M_ARCHITECTURE §8 with the flow.
+- Follow-up: amend ADR-0030 with flow F-10, and M2M_ARCHITECTURE §8 with flows F-10 and F-11 (done 2026-10-25).
+- Follow-up: Ansible role `monitoring` with pinned image digests (done 2026-10-25, `ansible/roles/monitoring`, not applied).
 - Follow-up: add the four services to SERVICE_CATALOG and the backup of Elasticsearch to BACKUP_STRATEGY (R-09).
 
 ## Security and compliance notes
 
-- Trust boundaries: TB-5 (nodes to telemetry), TB-7 (Sigma, shared and hostile by assumption), TB-4 (node to node, one declared exception F-9).
+- Trust boundaries: TB-5 (nodes to telemetry), TB-7 (Sigma, shared and hostile by assumption), TB-4 (node to node, declared exceptions F-10 and F-11).
 - Data classes: audit records and logs are Internal and stay on PC Alentejo. Sigma sees metrics only.
 - Controls: write-only ingest key for the audit hook; Viewer-only Grafana account for Sigma; no public exposure; TLS on every interface.
 - Threats: a Sigma user reads the infrastructure metrics (T-08), accepted within ADR-0030. A stolen Grafana Viewer credential exposes metrics only. Added as R-30.

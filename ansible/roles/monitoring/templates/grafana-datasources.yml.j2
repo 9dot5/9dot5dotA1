@@ -1,0 +1,9 @@
+# Managed by Ansible (roles/monitoring). Metrics only: no audit data source (ADR-0035 decision 4).
+apiVersion: 1
+datasources:
+  - name: Prometheus
+    type: prometheus
+    access: proxy
+    url: http://prometheus:{{ monitoring_ports.prometheus }}
+    isDefault: true
+    editable: false

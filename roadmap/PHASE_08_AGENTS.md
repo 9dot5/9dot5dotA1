@@ -17,6 +17,7 @@ defined in MCP_STRATEGY.md.
 - [ ] MCP servers (Knowledge, Governance, Security, Architecture) with scoped tokens
 - [ ] Monthly evaluation process from AGENT_STRATEGY.md running
 - [ ] Orchestrator identity and a second agent host on PC Alentejo (ADR-0034, Proposed)
+- [ ] Audit sink on PC Alentejo (Elasticsearch, ADR-0035, Proposed), so that agent sessions can start
 
 ## Exit criteria
 

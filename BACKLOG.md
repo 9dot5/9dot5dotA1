@@ -31,7 +31,7 @@ The next free number is ADR-0019. The numbers below are proposals.
 | ADR-0022 Backup platform and key custody | BACKUP_STRATEGY names no tool. The audit log and agent keys are not in any data set | B-08 |
 | ADR-0023 Confluence publication method | Phase 01 deliverable, recorded as "to be written" | B-36 |
 | ADR-0024 Portal architecture and hosting | Phase 03 exit criterion. ADR-0015 is provisional | B-37 |
-| ADR-0025 Host configuration method | ADR-0001 rule 4 and DEPLOYMENT_STRATEGY principle 1 require declarative configuration. `scripts/setup-agent-runner.ps1` is imperative, with no recorded exception | B-32 |
+| ADR-0025 Host configuration method | ADR-0001 rule 4 and DEPLOYMENT_STRATEGY principle 1 require declarative configuration. `scripts/setup-agent-runner.ps1` is imperative, with no recorded exception. Drafted 2026-10-25: [ADR-0025](adr/ADR-0025-host-configuration-ansible.md), Ansible pull model (Proposed) | B-32 |
 | ADR-0026 Personal data governance (GDPR) | "Personal" is a data class with no record of processing and no DPIA trigger | B-30 |
 | ADR-0027 Agent runtime hardening (amends ADR-0017) | ADR-0017 says "fail closed", but the post-hook cannot block. The HTTPS requirement is not enforced. The deny list is incomplete | B-09 |
 | ADR-0028 Work tracking and traceability | README names Jira as the execution source. No ADR defines keys, workflow or linking rules | B-45 |

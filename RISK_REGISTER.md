@@ -48,6 +48,7 @@
 | R-27 | Routine work is done through an unregistered out-of-band path (plain SSH from a personal session, as on 2026-10-25) | Threat T-OPS-17; R-01; ADR-0033 | 4 | 4 | 16 | High | Reduce | Break-glass register and per-session record (ADR-0033) | Open, owner decision |
 | R-28 | An orchestrator agent, steered by prompt injection, activates other agents | ADR-0034 lets the orchestrator activate registered identities. T-03 | 3 | 4 | 12 | High | Reduce | Separate OS account, owner ceiling per identity, alert on each activation (ADR-0034) | Open, owner decision |
 | R-29 | Internal data is published in the public repository | `9dot5/9dot5dotA1` is public. Node addresses were in M2M_ARCHITECTURE and were removed before the first push (2026-10-25). Issues and pull requests are public too | 3 | 4 | 12 | High | Reduce | Make the repository private, or scan each change for Internal data before push (B-04) | Open, owner decision |
+| R-30 | A Sigma user or a stolen Grafana Viewer credential reads the infrastructure metrics | ADR-0035 flow F-9 gives Sigma read access to a metrics-only Grafana on PC Alentejo. T-08 | 2 | 3 | 6 | Medium | Reduce | Metrics-only organisation, Viewer role, overlay only, no audit data (ADR-0035) | Open, owner decision |
 
 ## 3. Summary
 
@@ -55,7 +56,7 @@
 |---|---|---|
 | Critical | 1 | R-01 |
 | High | 13 | R-02, R-04, R-05, R-06, R-08, R-10, R-13, R-14, R-21, R-25, R-27, R-28, R-29 |
-| Medium | 15 | R-03, R-07, R-09, R-11, R-12, R-15, R-16, R-17, R-18, R-19, R-20, R-22, R-23, R-24, R-26 |
+| Medium | 16 | R-03, R-07, R-09, R-11, R-12, R-15, R-16, R-17, R-18, R-19, R-20, R-22, R-23, R-24, R-26, R-30 |
 | Low | 0 | — |
 
 Scores are estimates. The first-week items in [PRIORITY_MATRIX.md](PRIORITY_MATRIX.md) reduce R-01, R-04, R-05 and part of R-06. R-21 needs an owner decision, not more work.
@@ -73,3 +74,4 @@ Scores are estimates. The first-week items in [PRIORITY_MATRIX.md](PRIORITY_MATR
 | 2026-10-25 | First version from the repository gap analysis | Architect (draft for owner review) |
 | 2026-10-25 | R-04 and R-05 re-checked against the working tree. Line references corrected (the script has 162 lines). R-05 patch drafted outside the repository for owner review | Session draft, not a registered agent identity (see CLAUDE.md). Owner to review |
 | 2026-10-25 | R-28 (orchestrator, ADR-0034) and R-29 (public repository) added | Session draft, not a registered agent identity. Owner to review |
+| 2026-10-25 | R-30 (Sigma read access to Grafana, ADR-0035) added. R-12 now depends on PC Alentejo instead of Dynatrace if ADR-0035 is accepted | Session draft. Owner to review |

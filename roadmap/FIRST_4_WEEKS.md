@@ -36,3 +36,5 @@
 ## Not in the first four weeks
 
 Installing any service, host or container. Those start in Phase 03 or later, after the gates above.
+
+**Exception (owner decision, 2026-10-25):** the monitoring stack of [ADR-0035](../adr/ADR-0035-alentejo-monitoring-stack.md) (Elasticsearch, Kibana, Prometheus, Grafana) may be installed on PC Alentejo before the Phase 03 gate, so that the agent audit sink exists. The other preconditions of ADR-0035 decision 7 still apply: the memory use is measured first, and the services are in SERVICE_CATALOG. Review this exception at the Phase 03 gate.

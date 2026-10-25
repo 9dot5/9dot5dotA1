@@ -1,6 +1,6 @@
 # ADR-0035: Monitoring stack on PC Alentejo
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Date:** 2026-10-25
 - **Deciders:** Rui Silva (`9dot5`)
 - **Review by:** 2027-04-25
@@ -67,3 +67,9 @@ Score for A is an estimate. Values: value 5, frequency 4, cost 3, risk 3, revers
 - Data classes: audit records and logs are Internal and stay on PC Alentejo. Sigma sees metrics only.
 - Controls: write-only ingest key for the audit hook; Viewer-only Grafana account for Sigma; no public exposure; TLS on every interface.
 - Threats: a Sigma user reads the infrastructure metrics (T-08), accepted within ADR-0030. A stolen Grafana Viewer credential exposes metrics only. Added as R-30.
+
+## Change history
+
+| Date | Change | By |
+|---|---|---|
+| 2026-10-25 | Accepted, with residual risks R-12 and R-30. ADR-0037 double check: automatic check passed; owner named and confirmed it in the session ("sim, aceito a ADR-0025, ADR-0034 e ADR-0035, e a exceção da Fase 00") | Owner decision, recorded by an unregistered Claude Code session (no `AGENT_ID`, see R-01) |

@@ -16,8 +16,8 @@ defined in MCP_STRATEGY.md.
 - [ ] Documentation agent: proposes fixes for broken links and stale metadata
 - [ ] MCP servers (Knowledge, Governance, Security, Architecture) with scoped tokens
 - [ ] Monthly evaluation process from AGENT_STRATEGY.md running
-- [ ] Orchestrator identity and a second agent host on PC Alentejo (ADR-0034, Proposed)
-- [ ] Audit sink on PC Alentejo (Elasticsearch, ADR-0035, Proposed), so that agent sessions can start
+- [ ] Orchestrator identity and a second agent host on PC Alentejo (ADR-0034, Accepted)
+- [ ] Audit sink on PC Alentejo (Elasticsearch, ADR-0035, Accepted), so that agent sessions can start
 
 ## Exit criteria
 

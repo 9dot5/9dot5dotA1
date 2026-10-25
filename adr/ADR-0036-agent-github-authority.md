@@ -1,6 +1,6 @@
 # ADR-0036: Agent authority on GitHub
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Date:** 2026-10-25
 - **Deciders:** Rui Silva (`9dot5`)
 - **Review by:** 2027-04-25
@@ -49,3 +49,9 @@ Score for A is an estimate. Values: value 5, frequency 5, cost 4, risk 2, revers
 - Trust boundaries: TB-1 (agent to repository) widens from "propose" to "change and merge". TB-3 is reached indirectly, through ansible-pull.
 - Controls: no `delete_repo` scope; deny rule for `gh repo delete`; required checks on `main`; alerts on merges and settings changes; audit records per tool call.
 - Threats: T-03 (prompt injection), T-09 (tampering with `main`), T-12 (wrong governance statement merged). Residual risk is the owner's to accept when deciding this ADR.
+
+## Change history
+
+| Date | Change | By |
+|---|---|---|
+| 2026-10-25 | Accepted, with residual risks R-02, R-31 and the attribution gap (R-01) until GitHub Apps exist. ADR-0037 double check: automatic check passed, owner confirmed in the session ("sim aceito") | Owner decision, recorded by an unregistered Claude Code session (no `AGENT_ID`, see R-01) |

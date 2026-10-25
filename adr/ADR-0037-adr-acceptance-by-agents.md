@@ -1,6 +1,6 @@
 # ADR-0037: Agents record ADR decisions with owner permission and a double check
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Date:** 2026-10-25
 - **Deciders:** Rui Silva (`9dot5`)
 - **Review by:** 2027-04-25
@@ -48,3 +48,9 @@ Score for A is an estimate. Values: value 5, frequency 3, cost 5, risk 3, revers
 - Trust boundaries: TB-1 (agent to repository). The agent now writes governance decisions, not only proposals.
 - Controls: named permission; automatic check; final owner confirmation; separate commit; change-history line; audit record; the gate's owner review stays owner-only.
 - Threats: T-03 (prompt injection presenting itself as owner permission) and T-12 (wrong governance statement). Added as R-32.
+
+## Change history
+
+| Date | Change | By |
+|---|---|---|
+| 2026-10-25 | Accepted, with residual risk R-32. Double check: automatic check passed, owner confirmed in the session ("sim aceito"). This ADR was recorded with the procedure it defines, at the owner's instruction | Owner decision, recorded by an unregistered Claude Code session (no `AGENT_ID`, see R-01) |

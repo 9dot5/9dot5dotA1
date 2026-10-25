@@ -4,7 +4,7 @@
 - **Date:** 2026-10-25
 - **Deciders:** Rui Silva (`9dot5`)
 - **Review by:** 2027-04-25
-- **Related:** ADR-0001, ADR-0006, ADR-0029, ADR-0031, ADR-0033, ADR-0034, ADR-0035, [architecture/DEPLOYMENT_STRATEGY.md](../architecture/DEPLOYMENT_STRATEGY.md), [BACKLOG.md](../BACKLOG.md) (B-32)
+- **Related:** ADR-0001, ADR-0006, ADR-0029, ADR-0031, ADR-0033, ADR-0034, ADR-0035, ADR-0036, ADR-0038, [architecture/DEPLOYMENT_STRATEGY.md](../architecture/DEPLOYMENT_STRATEGY.md), [BACKLOG.md](../BACKLOG.md) (B-32)
 
 ## Context
 
@@ -45,12 +45,12 @@ Score for A is an estimate. Values: value 4, frequency 4, cost 4, risk 3, revers
 - Positive: host state is reviewable in Git and reproducible.
 - Positive: no host needs to accept inbound configuration connections.
 - Negative: a failed `ansible-pull` on a host is seen only by that host's monitoring. Mitigation: each run reports its result as a health signal (ADR-0035).
-- Negative: anyone who can merge to `main` changes every host. Mitigation: owner-only merge (ADR-0010), and the pull reads `main` only.
-- Follow-up: write the first role, for the monitoring stack (ADR-0035), and a test container for `--check` runs.
+- Negative: anyone who can merge to `main` changes every host, and agents may merge after the required checks (ADR-0036). Mitigation: the CI checks (`ansible-lint`, syntax check) run on every pull request; the owner makes them required on `main` (ADR-0038); each merge alerts the owner; the pull reads `main` only. Recorded as R-31.
+- Follow-up: write the first role, for the monitoring stack (ADR-0035), and a test container for `--check` runs. The role is written (`ansible/roles/monitoring`, 2026-10-25); the test container is open.
 - Follow-up: move `scripts/setup-agent-runner.ps1` into a role once Windows-level settings are in scope (B-32).
 
 ## Security and compliance notes
 
-- Trust boundaries: TB-1 (repository to host). The repository becomes a configuration source for hosts, so a malicious merge reaches every host. Branch protection and owner-only merge are preconditions.
+- Trust boundaries: TB-1 (repository to host). The repository becomes a configuration source for hosts, so a malicious merge reaches every host. Branch protection with required checks is a precondition (ADR-0036, ADR-0038).
 - Data classes: Public in the repository. Internal and Secret data stay on the host.
 - Threats: tampering with `main` (T-09). Supply chain of Ansible collections: versions are pinned and reviewed.

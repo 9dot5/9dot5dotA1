@@ -5,6 +5,8 @@
 
 The list of out-of-band paths into each node (ADR-0033 rule 2). A path not listed here is not permitted. This repository is public, so the register names paths and holders only: no addresses, ports, passwords or keys. Each session's record is kept outside the repository, in the owner's restricted store (ADR-0033 rule 3).
 
+SSH between the owner's workstations (`host-dev-01`, `host-ws-01`) is not break-glass and is not listed here: it is governed by [ADR-0040](../adr/ADR-0040-workstation-ssh-over-tailscale.md) and recorded in [HOST_INVENTORY.md](HOST_INVENTORY.md).
+
 ## Paths
 
 | Node | Method | Account | Credential held by | Recovery material | Status |

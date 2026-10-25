@@ -28,6 +28,9 @@ Status of the entries above: installed on PC Alentejo on 2026-10-25 by `ansible/
 | Host | Role | Hardware (measured or stated) | Shared? | Notes |
 |---|---|---|---|---|
 | Control plane (candidate) | Portal, identity, operator access | To measure: candidate desktop 8C/16T, 16 GB, discrete GPU | No | Decision in ADR to be written |
-| PC Alentejo (`DESKTOP-Q3GOUP4`) | Monitoring stack (ADR-0035), second agent host (ADR-0034), Ollama | Stated: 8 GB VRAM GPU; memory to measure | No (owned, ADR-0031) | Assumed to be the control-plane candidate above; to confirm when measured |
+| PC Alentejo (`DESKTOP-Q3GOUP4`, `host-ops-01`) | Monitoring stack (ADR-0035), second agent host (ADR-0034), Ollama | Measured 2026-10-25: Ryzen 7 3700X, 16 GB RAM (WSL capped at 8 GB) | No (owned, ADR-0031) | Assumed to be the control-plane candidate above |
+| maindesktop (`DESKTOP-QFGSNE9`, `host-ws-01`) | Workstation only | Measured 2026-10-25: i7-4700MQ, 3.2 GB RAM | No | Out of support; holds nothing of value (ADR-0040 decision 5) |
+
+Hardware, classes and access paths for every host: [HOST_INVENTORY.md](HOST_INVENTORY.md).
 | Laptop | Development only | 6C/12T, 8 GB | No | Not a production host |
 | Shared lab server | Scheduled jobs, coursework | 8 vCPU, 15 GB | Yes | Not a production host; no personal data |

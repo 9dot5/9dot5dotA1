@@ -15,6 +15,7 @@ Facts from the repository and the owner's environment, as of 2026-10-25:
 | **Sigma** | `sigma04.ist.utl.pt`, a university shared server. ADR-0015 rejected it for the portal. THREAT_MODEL T-08 forbids personal or secret data on shared hosts. A key `id_sigma` exists locally | Host identity yes; access rights and owner unconfirmed |
 | **LSD2** | Named in the request. Not in SERVICE_CATALOG, SYSTEM_LANDSCAPE or any document | **No** |
 | **Legion-9dot5** | This PC. Development host (SYSTEM_LANDSCAPE: laptop, 8 GB, not production) | Yes |
+| **maindesktop** (`DESKTOP-QFGSNE9`) | Owner's laptop, workstation class, not a node. SSH with Legion, key only, over Tailscale (ADR-0040). Windows 10 1903, out of support | Yes, 2026-10-25 |
 | **Proxmox** | Preferred technology. Not in any inventory | No |
 
 Assumptions (mark each as an assumption until verified):

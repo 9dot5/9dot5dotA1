@@ -45,7 +45,7 @@ Host configuration for owner-controlled hosts. Each host applies its own configu
 | No TLS on Elasticsearch, Kibana or Grafana | Ports are loopback only; TLS comes with the reverse proxy | ADR-0013 reverse proxy |
 | Grafana is not yet reachable from Sigma (flow F-10) | Needs the overlay listener and TLS | Same as above |
 | Agents on Legion cannot ship audit records to this Elasticsearch yet | That needs flow F-11 over TLS; the ingest key must not travel in clear (R-07) | Same as above |
-| No Windows host metrics | Confirmed on the first run (2026-10-25): `host.containers.internal` resolves to the Podman network gateway inside the WSL VM (10.89.0.1), not to Windows, and `windows_exporter` is not installed | Install `windows_exporter`, then point `monitoring_prometheus_windows_exporter_target` at the Windows host as the WSL VM sees it |
+| No Windows host metrics | Confirmed on the first run (2026-10-25): `host.containers.internal` resolves to the Podman network gateway inside the WSL VM, not to Windows, and `windows_exporter` is not installed | Install `windows_exporter`, then point `monitoring_prometheus_windows_exporter_target` at the Windows host as the WSL VM sees it |
 | No audit retention policy (12 months, ADR-0017) | Needs an index lifecycle with rollover | Follow-up in the role |
 | No scheduled runs | First run is manual | Windows Task Scheduler entry, in a later change |
 | Memory limits are from one idle measurement | Measured on PC Alentejo on 2026-10-25, with no audit traffic yet | Measure again under load and adjust |

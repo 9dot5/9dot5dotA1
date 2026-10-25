@@ -26,8 +26,8 @@ The GitHub App proves the API actions: pull requests, comments, checks.
 1. No app has **Administration: write**, **Secrets**, **Environments** or **Members** permission. Agents may
    merge pull requests once the required checks pass (ADR-0036). On GitHub, Administration write is the
    permission that allows deleting a repository, and it cannot be split from changing settings, so no app
-   holds it. Repository settings (branch protection, rulesets, visibility) are changed through the owner's
-   `gh` login, whose token has no `delete_repo` scope.
+   holds it. Repository settings (branch protection, rulesets, visibility) are changed by the owner only
+   (ADR-0038).
 2. No app is installed on any repository other than `9dot5dotA1`.
 3. Private keys are generated in GitHub, downloaded once, and stored under `C:\ProgramData\9dot5dotA1\github-apps\`
    with read access for the agent account only. They are never committed or pasted into chat.

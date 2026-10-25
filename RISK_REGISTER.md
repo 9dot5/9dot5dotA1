@@ -51,6 +51,7 @@
 | R-30 | A Sigma user or a stolen Grafana Viewer credential reads the infrastructure metrics | ADR-0035 flow F-9 gives Sigma read access to a metrics-only Grafana on PC Alentejo. T-08 | 2 | 3 | 6 | Medium | Reduce | Metrics-only organisation, Viewer role, overlay only, no audit data (ADR-0035) | Open, owner decision |
 | R-31 | A merge made by an agent reaches every host through ansible-pull | ADR-0036 lets agents merge; ADR-0025 makes `main` the host configuration source. T-03, T-09 | 3 | 4 | 12 | High | Reduce | ansible-pull applies only after `ansible-lint` and `--check` pass; alert on each merge; revert and re-run (ADR-0025, ADR-0036) | Open, owner decision |
 | R-32 | An agent records an ADR acceptance the owner did not make | ADR-0037 lets agents write a status change on owner permission. Injected or misread permission (T-03, T-12) | 2 | 5 | 10 | Medium | Reduce | Named permission, automatic check, final owner confirmation, separate commit, alert (ADR-0037) | Open, owner decision |
+| R-33 | An agent changes repository administration through `gh api` with the owner's login | ADR-0038 makes administration owner-only, but sessions still use the owner's `repo`-scoped token. Deny rules cover the `gh` commands, not every API call | 2 | 4 | 8 | Medium | Reduce | Deny rules; audit of every tool call; GitHub Apps without Administration write (AGENT_IDENTITIES step 3) | Open |
 
 ## 3. Summary
 
@@ -58,7 +59,7 @@
 |---|---|---|
 | Critical | 1 | R-01 |
 | High | 14 | R-02, R-04, R-05, R-06, R-08, R-10, R-13, R-14, R-21, R-25, R-27, R-28, R-29, R-31 |
-| Medium | 17 | R-03, R-07, R-09, R-11, R-12, R-15, R-16, R-17, R-18, R-19, R-20, R-22, R-23, R-24, R-26, R-30, R-32 |
+| Medium | 18 | R-03, R-07, R-09, R-11, R-12, R-15, R-16, R-17, R-18, R-19, R-20, R-22, R-23, R-24, R-26, R-30, R-32, R-33 |
 | Low | 0 | — |
 
 Scores are estimates. The first-week items in [PRIORITY_MATRIX.md](PRIORITY_MATRIX.md) reduce R-01, R-04, R-05 and part of R-06. R-21 needs an owner decision, not more work.
@@ -79,3 +80,4 @@ Scores are estimates. The first-week items in [PRIORITY_MATRIX.md](PRIORITY_MATR
 | 2026-10-25 | R-30 (Sigma read access to Grafana, ADR-0035) added. R-12 now depends on PC Alentejo instead of Dynatrace if ADR-0035 is accepted | Session draft. Owner to review |
 | 2026-10-25 | R-02 restated after ADR-0036 (agents may merge after checks). R-31 added | Session draft. Owner to review |
 | 2026-10-25 | R-32 added (ADR-0037, agents record owner decisions). The note in section 1 that agents never accept a risk now reads with ADR-0037 | Session draft. Owner to review |
+| 2026-10-25 | R-33 added (ADR-0038, administration owner-only) | Session draft. Owner to review |

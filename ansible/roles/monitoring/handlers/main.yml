@@ -1,0 +1,12 @@
+---
+- name: Restart prometheus
+  containers.podman.podman_container:
+    name: prometheus
+    state: started
+    restart: true
+
+- name: Restart grafana
+  containers.podman.podman_container:
+    name: grafana
+    state: started
+    restart: true

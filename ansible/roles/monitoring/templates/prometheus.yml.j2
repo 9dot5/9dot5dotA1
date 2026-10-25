@@ -1,0 +1,15 @@
+# Managed by Ansible (roles/monitoring). Changes go through Git (ADR-0025).
+global:
+  scrape_interval: 30s
+  evaluation_interval: 30s
+
+scrape_configs:
+  - job_name: prometheus
+    static_configs:
+      - targets: ["localhost:9090"]
+
+  - job_name: windows
+    static_configs:
+      - targets: ["{{ monitoring_prometheus_windows_exporter_target }}"]
+        labels:
+          node: alentejo

@@ -1,0 +1,5 @@
+---
+# Pinned collections (ADR-0025 rule 4). Keep in step with runner/Containerfile.
+collections:
+  - name: containers.podman
+    version: "1.21.2"

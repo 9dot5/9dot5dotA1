@@ -1,0 +1,6 @@
+---
+- name: Monitoring stack on PC Alentejo (ADR-0035)
+  hosts: alentejo
+  gather_facts: false
+  roles:
+    - monitoring

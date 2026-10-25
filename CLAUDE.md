@@ -19,7 +19,7 @@ changing anything:
    You never set a status to `Accepted`, `Rejected` or `Superseded`, never accept a risk, and
    never edit an accepted ADR except to add a link to the decision that supersedes it.
 3. **No merges, no pushes.** Do not merge, rebase onto `main`, force-push, or run `gh pr merge`.
-   Do not commit unless the owner asks in that session.
+   Agents may commit, on a branch only, never on `main` (owner decision, 2026-10-25).
 4. **Protected files.** Do not edit `CODEOWNERS` or `LICENSE`. Changes to `security/` controls and
    the threat model are drafted for review and flagged in your summary.
 5. **No secrets.** Never write tokens, passwords, keys or connection strings into any file,

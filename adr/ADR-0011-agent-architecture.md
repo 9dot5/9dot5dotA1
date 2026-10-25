@@ -41,7 +41,8 @@ We will run agents as Claude Code sessions in this repository, with four layers:
    - `docs-maintainer`: fixes broken links, stale review dates and glossary terms. Does not change
      any decision status.
 4. **Human gate.** The owner accepts ADRs, approves merges (ADR-0010, CONTRIBUTING.md sole-owner
-   mode) and signs phase gates. Agents do not commit unless the owner asks.
+   mode) and signs phase gates. Agents may commit on branches, never on `main`
+   (owner decision, 2026-10-25; previously "Agents do not commit unless the owner asks").
 5. **Identity and audit.** Each subagent role is a registered agent identity with its own Git
    author and SSH signing key (`.claude/agent-identities.json`). Sessions start through
    `scripts/start-agent.ps1`, which refuses an unregistered or pending identity. Every tool call is

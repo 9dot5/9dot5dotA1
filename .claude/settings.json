@@ -18,8 +18,6 @@
       "Bash(gh auth refresh -s delete_repo:*)",
       "Bash(gh auth refresh --scopes delete_repo:*)",
       "Bash(gh repo edit:*)",
-      "Bash(gh repo archive:*)",
-      "Bash(gh repo rename:*)",
       "Bash(gh secret:*)",
       "Bash(gh variable:*)",
       "Bash(rm:*)",

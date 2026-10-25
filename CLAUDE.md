@@ -24,9 +24,11 @@ changing anything:
 3. **GitHub: manage the repository, do not administer it** (ADR-0036, ADR-0038, owner decision
    2026-10-25). Agents may commit, push, open, review and merge pull requests, and manage branches,
    issues, labels, releases, workflow files and workflow runs. Commit on a branch, never directly on
-   `main`; merge to `main` through a pull request once its checks pass. Administration is the
-   owner's: settings, visibility, branch protection, rulesets, collaborators, secrets, variables,
-   webhooks, deploy keys, App installations, archive, rename and transfer. Ask the owner for those.
+   `main`; merge to `main` through a pull request once its checks pass. Agents may also archive,
+   rename and transfer a repository, transfer only to the owner's account or an organisation the
+   owner owns. Other administration is the owner's: settings, visibility, branch protection,
+   rulesets, collaborators, secrets, variables, webhooks, deploy keys, App installations. Ask the
+   owner for those.
    Never delete a repository, and never use a token with the `delete_repo` scope.
 4. **Protected files.** Do not edit `CODEOWNERS` or `LICENSE`. Changes to `security/` controls and
    the threat model are drafted for review and flagged in your summary.

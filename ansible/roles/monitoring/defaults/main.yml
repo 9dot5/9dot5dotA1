@@ -24,12 +24,14 @@ monitoring_ports:
   prometheus: 9090
   grafana: 3000
 
-# Memory limits. Not measured yet on PC Alentejo (ADR-0035 decision 7): set from measurement.
+# Memory limits, from the measurement on PC Alentejo on 2026-10-25 (ADR-0035 decision 7), idle stack:
+# Elasticsearch 1.79 of 2 GB, Kibana 0.94 of 1 GB, Prometheus 83 MB, Grafana 221 of 256 MB.
+# Kibana and Grafana were near their limits, so they get headroom. WSL caps all distributions at 8 GB.
 monitoring_elasticsearch_heap: 1g
 monitoring_elasticsearch_memory: 2g
-monitoring_kibana_memory: 1g
+monitoring_kibana_memory: 1536m
 monitoring_prometheus_memory: 512m
-monitoring_grafana_memory: 256m
+monitoring_grafana_memory: 512m
 
 monitoring_prometheus_retention: 30d
 # windows_exporter runs on the Windows host, outside Podman (installed by the owner).

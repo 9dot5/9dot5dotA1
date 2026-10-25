@@ -21,7 +21,7 @@ runbook link, ADR link, last review date.
 | Prometheus | Metrics store (ADR-0009 signals) | PC Alentejo | Production (planned) | Rui Silva | Internal: loopback only | Internal (metrics) | RB-host-resources | ADR-0035 | 2026-10-25 |
 | Grafana | Metrics dashboards; Sigma view (F-10) | PC Alentejo | Production (planned) | Rui Silva | Internal: loopback now; overlay with TLS for F-10 | Internal (metrics) | to write | ADR-0035 | 2026-10-25 |
 
-Status of the entries above: defined in `ansible/roles/monitoring`, not installed. ADR-0035 is accepted and the Phase 00 exception recorded (2026-10-25); installation waits for the capacity measurement.
+Status of the entries above: installed on PC Alentejo on 2026-10-25 by `ansible/roles/monitoring` (ADR-0035, Phase 00 exception, ADR-0039). Health at install: Elasticsearch green, Kibana available, Prometheus ready, Grafana ok. Measured idle memory: Elasticsearch 1.79 GB, Kibana 0.94 GB, Prometheus 83 MB, Grafana 221 MB; host free RAM 3.2 GB with the stack running, after stopping non-essential desktop applications.
 
 ## Hosts
 

@@ -53,13 +53,14 @@
 | R-32 | An agent records an ADR acceptance the owner did not make | ADR-0037 lets agents write a status change on owner permission. Injected or misread permission (T-03, T-12) | 2 | 5 | 10 | Medium | Reduce | Named permission, automatic check, final owner confirmation, separate commit, alert (ADR-0037) | Open, owner decision |
 | R-33 | An agent changes repository administration through `gh api` with the owner's login | ADR-0038 makes administration owner-only, but sessions still use the owner's `repo`-scoped token. Deny rules cover the `gh` commands, not every API call | 2 | 4 | 8 | Medium | Reduce | Deny rules; audit of every tool call; GitHub Apps without Administration write (AGENT_IDENTITIES step 3) | Open |
 | R-34 | An agent transfers a repository out of the owner's control, or archives or renames it by mistake | ADR-0038 decision 1a lets agents archive, rename and transfer. A transfer to another account cannot be undone without the receiver | 2 | 5 | 10 | Medium | Reduce | Transfer only to the owner's account or organisations; audit and owner alert on each one; archive and rename are reversible | Open |
+| R-35 | An agent uses a remote shell on a node outside the gateway and the audit hook | ADR-0039: one-off Desktop Commander bootstrap of PC Alentejo, 2026-10-25. The path stays available on the device | 3 | 4 | 12 | High | Reduce | One-off exception only (ADR-0039 decision 4); session record; register entry; owner may revoke the device in Desktop Commander | Open |
 
 ## 3. Summary
 
 | Rating | Count | Items |
 |---|---|---|
 | Critical | 1 | R-01 |
-| High | 14 | R-02, R-04, R-05, R-06, R-08, R-10, R-13, R-14, R-21, R-25, R-27, R-28, R-29, R-31 |
+| High | 15 | R-02, R-04, R-05, R-06, R-08, R-10, R-13, R-14, R-21, R-25, R-27, R-28, R-29, R-31, R-35 |
 | Medium | 19 | R-03, R-07, R-09, R-11, R-12, R-15, R-16, R-17, R-18, R-19, R-20, R-22, R-23, R-24, R-26, R-30, R-32, R-33, R-34 |
 | Low | 0 | — |
 
@@ -83,3 +84,4 @@ Scores are estimates. The first-week items in [PRIORITY_MATRIX.md](PRIORITY_MATR
 | 2026-10-25 | R-32 added (ADR-0037, agents record owner decisions). The note in section 1 that agents never accept a risk now reads with ADR-0037 | Session draft. Owner to review |
 | 2026-10-25 | R-33 added (ADR-0038, administration owner-only) | Session draft. Owner to review |
 | 2026-10-25 | R-34 added (ADR-0038 decision 1a: agents archive, rename and transfer) | Session draft. Owner to review |
+| 2026-10-25 | R-35 added (ADR-0039, one-off agent bootstrap of PC Alentejo through Desktop Commander) | Session draft. Owner to review |

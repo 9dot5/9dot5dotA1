@@ -1,6 +1,6 @@
 # ADR-0034: Orchestrator agent and a second agent host on PC Alentejo
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Date:** 2026-10-25
 - **Deciders:** Rui Silva (`9dot5`)
 - **Review by:** 2027-04-25
@@ -72,3 +72,9 @@ Score for A is an estimate. Values: value 4, frequency 4, cost 3, risk 3, revers
 - Data classes: the public repository holds no node address, account password or key (CLAUDE.md rule 5, ADR-0031 data class). Issues and pull requests used for hand-off to PC Alentejo are public too, so they carry tasks only, never Internal data.
 - Controls: separate OS account for the orchestrator; registry ceiling owned by the owner; audited and alerted activations; no inbound path to either host.
 - Threats: T-03 (prompt injection) leading to mass activation, added as R-28. Residual risk: the owner accepts or rejects it when deciding this ADR.
+
+## Change history
+
+| Date | Change | By |
+|---|---|---|
+| 2026-10-25 | Accepted, with residual risks R-28. ADR-0037 double check: automatic check passed; owner named and confirmed it in the session ("sim, aceito a ADR-0025, ADR-0034 e ADR-0035, e a exceção da Fase 00") | Owner decision, recorded by an unregistered Claude Code session (no `AGENT_ID`, see R-01) |

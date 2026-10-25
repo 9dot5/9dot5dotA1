@@ -1,6 +1,7 @@
 # ADR-0036: Agent authority on GitHub
 
 - **Status:** Accepted
+- **Superseded in part by:** [ADR-0038](ADR-0038-repository-administration-owner-only.md) (decisions 1 and 4, repository administration)
 - **Date:** 2026-10-25
 - **Deciders:** Rui Silva (`9dot5`)
 - **Review by:** 2027-04-25

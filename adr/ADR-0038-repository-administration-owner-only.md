@@ -1,6 +1,6 @@
 # ADR-0038: Repository administration stays with the owner
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Date:** 2026-10-25
 - **Deciders:** Rui Silva (`9dot5`)
 - **Review by:** 2027-04-25
@@ -48,3 +48,10 @@ Score for A is an estimate. Values: value 4, frequency 4, cost 4, risk 4, revers
 - Trust boundaries: TB-1 (agent to repository). Narrows ADR-0036: agents change content, not the controls around it.
 - Controls: deny rules; Apps without Administration write; owner review of every administration change.
 - Threats: T-09 (tampering with `main` protection). Residual: R-33 until GitHub Apps replace the owner's login for agents, and R-34 for archive, rename and transfer.
+
+## Change history
+
+| Date | Change | By |
+|---|---|---|
+| 2026-10-25 | Decision 1a added on the owner's instruction: agents may archive, rename and transfer (transfer only to the owner's account or organisations) | Owner decision, drafted by an unregistered Claude Code session |
+| 2026-10-25 | Accepted, with residual risks R-33 and R-34. ADR-0037 double check: automatic check passed (the contradiction with ADR-0036 decisions 1 and 4 is the declared partial supersession); owner confirmed in the session ("Sim") together with decision 1a | Owner decision, recorded by an unregistered Claude Code session (no `AGENT_ID`, see R-01) |

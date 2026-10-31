@@ -17,6 +17,7 @@ defined in MCP_STRATEGY.md.
 - [ ] MCP servers (Knowledge, Governance, Security, Architecture) with scoped tokens
 - [ ] Monthly evaluation process from AGENT_STRATEGY.md running
 - [ ] Orchestrator identity and a second agent host on PC Alentejo (ADR-0034, Accepted)
+- [ ] Identities per tool (Claude Code, Devin and others), leases on shared resources, and the external workstation class ([ADR-0042](../adr/ADR-0042-multi-agent-coexistence.md), Proposed)
 - [ ] Audit sink on PC Alentejo (Elasticsearch, ADR-0035, Accepted), so that agent sessions can start
 - [ ] Work queue for the agent dev loop, bounded automatic merge into integration branches, one repository per client ([ADR-0043](../adr/ADR-0043-agent-work-queue.md), Proposed)
 

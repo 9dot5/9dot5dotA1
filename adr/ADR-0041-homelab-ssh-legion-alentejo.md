@@ -47,7 +47,7 @@ Facts:
 - Positive: routine access is possible without passwords. The LAN no longer reaches port 22 on either host, which closes the ADR-0040 decision 6 follow-up for Legion.
 - Negative: a compromise of Legion gives a shell on the node. Mitigation: one allowed user, no agent forwarding, source address pinned on both the firewall and the key. Tailscale ACLs are a follow-up, as a second network layer.
 - Until this ADR is accepted, ADR-0034 decision 8 still stands formally. The applied path rests only on the owner's instruction in the session.
-- Follow-up (owner, Tailscale admin console): ACL so that only `host-dev-01` and `host-ops-01` can reach `tcp:22` on each other.
+- Follow-up (owner, Tailscale admin console): an ACL that mirrors decision 3. `tcp:22` is allowed only for `host-ops-01` to `host-dev-01`, `host-dev-01` to `host-ops-01`, `host-ws-01` to `host-dev-01` (ADR-0040) and `host-dev-01` to `host-ws-01` (ADR-0040).
 - Follow-up: once ADR-0029 is admitted, review whether this path goes back to break-glass.
 
 ## Security and compliance notes

@@ -1,6 +1,6 @@
 # ADR-0042: Coexistence of agent tools, resource leases and the owner's work workstation
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Date:** 2026-10-31
 - **Deciders:** Rui Silva (`9dot5`)
 - **Review by:** 2027-04-30
@@ -74,3 +74,4 @@ Score for A is an estimate. Values: value 4, frequency 4, cost 4, risk 3, revers
 | Date | Change | By |
 |---|---|---|
 | 2026-10-31 | Proposed | Claude Code session on Legion (no `AGENT_ID`, R-01), on owner instruction |
+| 2026-10-31 | Accepted. ADR-0037 double check: automatic check passed; owner named and confirmed it in the session ("resolve tudo", "faz tu eu deixo") | Owner decision, recorded by a Devin session |

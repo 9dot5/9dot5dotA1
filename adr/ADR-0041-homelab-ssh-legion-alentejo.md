@@ -29,9 +29,9 @@ Facts:
    - curve25519 key exchange, AEAD ciphers and ETM MACs only;
    - agent forwarding, X11, tunnels and remote port forwarding off, with local forwarding (`-L`) allowed;
    - `LogLevel VERBOSE`, so the fingerprint of every login is logged.
-3. **Network:** inbound TCP 22 is allowed only from the Tailscale address ranges (the IPv4 shared address space /10 and the Tailscale IPv6 prefix), on every profile. Other port-22 rules stay disabled. Each authorised key also carries `from="<tailnet>"`, `no-agent-forwarding` and `no-X11-forwarding`, so a key copied off the tailnet is useless.
+3. **Network, pinned per source host:** each host accepts inbound TCP 22 only from the tailnet address of the peers allowed to reach it: Legion from `host-ops-01` and `host-ws-01`; PC Alentejo from `host-dev-01` only. The rule applies on every profile, and other port-22 rules stay disabled. Each authorised key carries `from="<that source host's tailnet address>"`, `no-agent-forwarding` and `no-X11-forwarding`, so a copied key does not work from any other host, on the tailnet or off it. Tailnet addresses are kept out of this public repository.
 4. **One key per source host, used only inside the homelab.** PC Alentejo uses `yau@DESKTOP-Q3GOUP4` (new, fingerprint below). The Sigma key is no longer authorised on Legion. Legion uses `rsilv@Legion-9dot5`.
-5. **Recording:** agent sessions over this path are recorded through ADR-0017 once the audit hook is active. Until then, R-01 applies, and the owner accepts that residual risk with this ADR.
+5. **Recording:** agent sessions over this path will be recorded through ADR-0017 once the audit hook is active. Until then R-01 applies to them. Accepting that residual risk is the owner's decision when deciding this ADR. It is not accepted by this Proposed record.
 6. `host-ws-01` keeps its ADR-0040 restrictions. It gets **no** key on PC Alentejo.
 
 ## Options considered
@@ -45,7 +45,8 @@ Facts:
 ## Consequences
 
 - Positive: routine access is possible without passwords. The LAN no longer reaches port 22 on either host, which closes the ADR-0040 decision 6 follow-up for Legion.
-- Negative: a compromise of Legion gives a shell on the node. Mitigation: one user only, no forwarding of agents, tailnet only; Tailscale ACLs as a follow-up.
+- Negative: a compromise of Legion gives a shell on the node. Mitigation: one allowed user, no agent forwarding, source address pinned on both the firewall and the key. Tailscale ACLs are a follow-up, as a second network layer.
+- Until this ADR is accepted, ADR-0034 decision 8 still stands formally. The applied path rests only on the owner's instruction in the session.
 - Follow-up (owner, Tailscale admin console): ACL so that only `host-dev-01` and `host-ops-01` can reach `tcp:22` on each other.
 - Follow-up: once ADR-0029 is admitted, review whether this path goes back to break-glass.
 
@@ -58,4 +59,4 @@ Facts:
 
 | Date | Change | By |
 |---|---|---|
-| 2026-10-31 | Proposed. The baseline was applied on the owner's instruction before the ADR was written (exception to documentation-first, ADR-0005) | Unregistered Claude Code session on PC Alentejo (no `AGENT_ID`) |
+| 2026-10-31 | Proposed. After review the same day, the firewall rules and `from=` were pinned to each source host instead of the whole tailnet. The baseline was applied on the owner's instruction before the ADR was written (exception to documentation-first, ADR-0005) | Unregistered Claude Code session on PC Alentejo (no `AGENT_ID`) |

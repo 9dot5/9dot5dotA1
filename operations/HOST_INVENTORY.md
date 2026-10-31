@@ -1,7 +1,7 @@
 # Host Inventory
 
 **Owner:** Rui Silva (`9dot5`) · **Status:** Proposed · **Review by:** 2027-01-25
-**Related:** [docs/naming-conventions.md](../docs/naming-conventions.md), [architecture/SYSTEM_LANDSCAPE.md](../architecture/SYSTEM_LANDSCAPE.md), [SERVICE_CATALOG.md](SERVICE_CATALOG.md), [BREAK_GLASS_REGISTER.md](BREAK_GLASS_REGISTER.md), [ADR-0031](../adr/ADR-0031-node-admission-policy.md), [ADR-0040](../adr/ADR-0040-workstation-ssh-over-tailscale.md)
+**Related:** [docs/naming-conventions.md](../docs/naming-conventions.md), [architecture/SYSTEM_LANDSCAPE.md](../architecture/SYSTEM_LANDSCAPE.md), [SERVICE_CATALOG.md](SERVICE_CATALOG.md), [BREAK_GLASS_REGISTER.md](BREAK_GLASS_REGISTER.md), [ADR-0031](../adr/ADR-0031-node-admission-policy.md), [ADR-0040](../adr/ADR-0040-workstation-ssh-over-tailscale.md), [ADR-0041](../adr/ADR-0041-homelab-ssh-legion-alentejo.md)
 
 The single list of the owner's machines. Every other document names a host by its **ID** from this table. IDs follow the naming convention (role-based, no personal names); the Windows host name and the nickname are kept so that people and tools can find the machine. This repository is public: no addresses, ports or passwords here.
 
@@ -22,15 +22,20 @@ Classes: a **node** is a host that Operations MCP may reach once admitted (ADR-0
 |---|---|---|---|---|
 | `host-dev-01` | `host-ws-01` | SSH over Tailscale, key only | `rsilv@Legion-9dot5` ed25519 key | ADR-0040 |
 | `host-ws-01` | `host-dev-01` | SSH over Tailscale, key only | `9dot5@DESKTOP-QFGSNE9` ed25519 key | ADR-0040 |
-| `host-dev-01` | `host-ops-01` | SSH or Desktop Commander | Owner | Break-glass only (ADR-0033, ADR-0039) |
+| `host-dev-01` | `host-ops-01` | SSH over Tailscale, key only | `rsilv@Legion-9dot5` ed25519 key | ADR-0041 (Proposed; applied on owner instruction 2026-10-31) |
+| `host-ops-01` | `host-dev-01` | SSH over Tailscale, key only | `yau@DESKTOP-Q3GOUP4` ed25519 key | ADR-0041 (Proposed; applied on owner instruction 2026-10-31) |
+| `host-dev-01` | `host-ops-01` | Desktop Commander | Owner | Break-glass only (ADR-0033, ADR-0039) |
 | `host-dev-01` | `ext-sigma-01` | SSH, user account | Owner's key | Course work; ADR-0030 for monitoring |
 
 Key fingerprints are recorded so that an unexpected key can be spotted:
 
 | Key | Fingerprint (SHA256) | Authorised on |
 |---|---|---|
-| `rsilv@Legion-9dot5` (ed25519) | `a85j9NJJNkzncvmHDkbzYGND5Np+yKRmU5ceCdWv2/c` | `host-ws-01` (`administrators_authorized_keys` and the user file) |
-| `9dot5@DESKTOP-QFGSNE9` (ed25519) | `o70xPnklcInqSHuiQzvhiMnwgdxwsujOVQIGdj91vTk` | `host-dev-01` (`administrators_authorized_keys`) |
+| `rsilv@Legion-9dot5` (ed25519) | `a85j9NJJNkzncvmHDkbzYGND5Np+yKRmU5ceCdWv2/c` | `host-ws-01` (`administrators_authorized_keys` and the user file); `host-ops-01` (`administrators_authorized_keys`, tailnet-only `from=`) |
+| `9dot5@DESKTOP-QFGSNE9` (ed25519) | `o70xPnklcInqSHuiQzvhiMnwgdxwsujOVQIGdj91vTk` | `host-dev-01` (`administrators_authorized_keys`, tailnet-only `from=`) |
+| `yau@DESKTOP-Q3GOUP4` (ed25519, created 2026-10-31) | `3oWU1b2qCiiwQ+KmAsYpLEvT2zzZ1hdF0AXtH7B6/80` | `host-dev-01` (`administrators_authorized_keys`, tailnet-only `from=`) |
+
+On 2026-10-31 two keys were removed from `host-dev-01`: the `ext-sigma-01` key, which was also used from `host-ops-01`, and Legion's own key.
 
 ## Baseline for SSH servers on workstations (ADR-0040)
 
@@ -40,7 +45,8 @@ Key fingerprints are recorded so that an unexpected key can be spotted:
 
 | Host | Key-only | Tailscale-only firewall | Checked |
 |---|---|---|---|
-| `host-dev-01` | Yes | Rule is on the Private profile; the Tailscale and Wi-Fi interfaces are both Private, so the LAN can reach port 22 too | 2026-10-25 |
+| `host-dev-01` | Yes; ADR-0041 hardened baseline | Yes (`OpenSSH-Server-In-TCP` limited to the tailnet on every profile; the LAN no longer reaches port 22) | 2026-10-31 |
+| `host-ops-01` | Yes (from 2026-10-31; passwords were accepted before); ADR-0041 hardened baseline | Yes (same rule, from 2026-10-31) | 2026-10-31 |
 | `host-ws-01` | Yes (from 2026-10-25) | Yes (`sshd-tailscale`; the all-profiles rule disabled 2026-10-25) | 2026-10-25 |
 
 ## Restrictions for `host-ws-01`

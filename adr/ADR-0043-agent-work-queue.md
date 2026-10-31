@@ -25,7 +25,7 @@ Facts:
 
 ## Decision
 
-1. **Queue.** A GitHub issue labelled `queue:ready` is a unit of work. Its state is a label: `queue:ready` → `queue:running` → `queue:review`, or `queue:failed` / `queue:needs-info`. Options are labels too: `agent:plan`, `prio:high` and `base:<branch>`. Only the owner creates queue items, because the repositories are private and issues are not open to the public. The queue source sits behind one contract (pick, mark, dispatch), so a Jira adapter can replace it once B-45 is decided.
+1. **Queue.** A GitHub issue labelled `queue:ready` is a unit of work. Its state is a label: `queue:ready` → `queue:running` → `queue:review`, or `queue:failed` / `queue:needs-info`. Options are labels too: `agent:plan`, `prio:high` and `base:<branch>`. Only issues opened by an allow-listed author enter the queue. The list is `QUEUE_ALLOWED_AUTHORS`, and by default it holds the repository owner only. The dispatcher enforces this whatever the repository's visibility, because an issue body is model input (T-03). The queue source sits behind one contract (pick, mark, dispatch), so a Jira adapter can replace it once B-45 is decided.
 2. **Dispatcher.** A scheduled workflow (`queue.yml`, every 10 minutes and on label) dispatches the next item to the worker. The order is `prio:high` first, then the oldest. Capacity is `QUEUE_MAX_RUNNING`, default 1, because of the single model in VRAM. Items stuck for more than 90 minutes without an active run are marked failed.
 3. **Worker.** `agent.yml` works on a branch `agent/GH-<n>-…`, opens one pull request per item with `Closes #n`, and reports the outcome back on the issue. The worker never pushes to `main`.
 4. **Automatic merge, bounded.** A pull request is merged without a person only when all of the following hold:
@@ -33,11 +33,15 @@ Facts:
    - its base is in `AUTO_MERGE_BASES` (default `integration client/*`);
    - the base is **not** `main` and not the default branch;
    - the review ends in `VEREDICTO: APROVADO`;
-   - every other check passed;
-   - the head is the reviewed commit.
+   - the pull request was opened by the `agent` workflow;
+   - every other check and commit status passed;
+   - the head is the reviewed commit;
+   - no changed file is under a protected path (`AUTO_MERGE_DENY_PATHS`: workflows, `security/`, `SECURITY.md`, `CODEOWNERS`, `LICENSE`, `.claude/`, review rules, model configuration).
+
+   Changes to security controls or to the pipeline itself are never merged automatically, on any branch (ADR-0010). After an automatic merge the job closes the linked issue, because GitHub applies `Closes #n` only on the default branch.
 
    Every merge into `main` or the default branch stays with the owner (ADR-0010).
-5. **Client projects.** Each client gets its own private repository, created from `agent-sandbox/templates/client`:
+5. **Client projects.** Each client gets its own private repository, created with *Use this template* from a private template repository, `client-template`. The owner creates it once from `agent-sandbox/templates/client`, because GitHub templates are whole repositories, not folders:
    - `agent/*` → `integration` is merged automatically (decision 4);
    - `integration` → `main` is merged by the owner only.
 
@@ -53,6 +57,7 @@ Facts:
 | Option | Benefits | Costs and risks | ROI score |
 |---|---|---|---|
 | A: GitHub Issues queue, bounded automatic merge into integration branches, one repository per client (chosen) | Runs unattended; works now with no new tool; per-client isolation of access and secrets; `main` stays human | Code reviewed only by a model reaches integration branches; an organisation is needed before the first client | 3.57 (estimate) |
+| 0: Do nothing (status quo): `agent.yml` started by hand, every merge by the owner, no client model | No new automation; ADR-0010 unchanged | The homelab is idle unless the owner starts each task; no path for client projects; a reboot leaves it down until logon | Rejected by the owner |
 | B: Same queue, every merge by the owner | Strongest control (ADR-0010 as written) | The owner becomes the bottleneck of a 24/7 loop | Rejected by the owner |
 | C: One repository, a branch per client | Simplest; one runner scale set | No isolation between clients' access and secrets | Rejected by the owner |
 | D: Jira as the queue now | Matches the stated execution source | B-45 undecided; GitHub for Jira not installed | Deferred |
@@ -63,10 +68,11 @@ Score for A is an estimate. Values: value 5, frequency 4, cost 3, risk 2, revers
 
 - Positive: work continues while the owner is away. Each item leaves a trail: issue, run, pull request and review.
 - Negative: model-reviewed code reaches integration branches without a person. Mitigation: `main` is never automatic; the gate has all checks green and a reviewed head; integration branches are reviewed by the owner before promotion.
-- Negative: an issue body is model input (T-03). Mitigation: only the owner creates items in private repositories; the worker has repository-scoped tokens only; it holds no secrets beyond `GITHUB_TOKEN`.
+- Negative: an issue body is model input (T-03). Mitigation: author allow-list in the dispatcher; issue numbers validated before any shell use; the worker has repository-scoped tokens only and no secrets beyond `GITHUB_TOKEN`.
 - Negative: hosted review sends the diff to a model provider. ADR-0021 (hosted-AI data handling) is still missing, and for client code it has to be decided before the first client.
 - Follow-up: write ADR-0028 (work tracking) before any Jira adapter.
 - Follow-up: the owner applies decision 7 and verifies it after one reboot.
+- Follow-up, by 2026-11-14 (`architect`, owner reviews): add the queue, dispatcher and client-repository model to [architecture/TARGET_ARCHITECTURE.md](../architecture/TARGET_ARCHITECTURE.md) and [architecture/AGENT_STRATEGY.md](../architecture/AGENT_STRATEGY.md) (ARCHITECTURE_GOVERNANCE).
 
 ## Security and compliance notes
 

@@ -58,7 +58,7 @@ Score for A is an estimate. Values: value 4, frequency 4, cost 4, risk 3, revers
 - Positive: concurrent changes to the same namespace or host become visible before they happen, not after.
 - Negative: a lease is advisory. An agent that skips the check still changes the resource. Mitigation: the check is part of each tool's instructions (CLAUDE.md, Devin rules); the audit chain shows changes made without a lease; R-37.
 - Negative: amends ADR-0011 (Devin "not in use") and extends ADR-0034. ADR-0034 is Accepted, so this ADR adds to it and does not edit it. If accepted, ADR-0011 is revised to point here.
-- Follow-up (owner): add the `tool` field, and Devin identities if wanted, to `.claude/agent-identities.json`. The file did not parse as JSON in a check on 2026-10-31; fix that first. Agents may not edit `.claude/**`.
+- Follow-up (owner): add the `tool` field, and Devin identities if wanted, to `.claude/agent-identities.json`. The file is valid JSON but starts with a UTF-8 BOM, which strict parsers reject (checked 2026-10-31); save it without the BOM. Agents may not edit `.claude/**`.
 - Follow-up (owner): create the `lease` label (agents may manage labels, so an agent may also do it).
 - Follow-up (owner): decide decision 9: keep or remove the Sigma receiver. If kept, give the tunnel its own key per ADR-0041 decision 4 and record it in HOST_INVENTORY (done for the current key on 2026-10-31).
 - Follow-up: add the lease check to CLAUDE.md and to the Devin rules file, once this ADR is accepted.

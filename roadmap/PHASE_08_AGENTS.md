@@ -18,6 +18,7 @@ defined in MCP_STRATEGY.md.
 - [ ] Monthly evaluation process from AGENT_STRATEGY.md running
 - [ ] Orchestrator identity and a second agent host on PC Alentejo (ADR-0034, Accepted)
 - [ ] Audit sink on PC Alentejo (Elasticsearch, ADR-0035, Accepted), so that agent sessions can start
+- [ ] Work queue for the agent dev loop, bounded automatic merge into integration branches, one repository per client ([ADR-0043](../adr/ADR-0043-agent-work-queue.md), Proposed)
 
 ## Exit criteria
 

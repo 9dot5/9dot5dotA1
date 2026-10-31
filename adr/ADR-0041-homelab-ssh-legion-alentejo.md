@@ -29,7 +29,7 @@ Facts:
    - curve25519 key exchange, AEAD ciphers and ETM MACs only;
    - agent forwarding, X11, tunnels and remote port forwarding off, with local forwarding (`-L`) allowed;
    - `LogLevel VERBOSE`, so the fingerprint of every login is logged.
-3. **Network:** inbound TCP 22 is allowed only from the tailnet (`100.64.0.0/10`, `fd7a:115c:a1e0::/48`), on every profile. Other port-22 rules stay disabled. Each authorised key also carries `from="<tailnet>"`, `no-agent-forwarding` and `no-X11-forwarding`, so a key copied off the tailnet is useless.
+3. **Network:** inbound TCP 22 is allowed only from the Tailscale address ranges (the IPv4 shared address space /10 and the Tailscale IPv6 prefix), on every profile. Other port-22 rules stay disabled. Each authorised key also carries `from="<tailnet>"`, `no-agent-forwarding` and `no-X11-forwarding`, so a key copied off the tailnet is useless.
 4. **One key per source host, used only inside the homelab.** PC Alentejo uses `yau@DESKTOP-Q3GOUP4` (new, fingerprint below). The Sigma key is no longer authorised on Legion. Legion uses `rsilv@Legion-9dot5`.
 5. **Recording:** agent sessions over this path are recorded through ADR-0017 once the audit hook is active. Until then, R-01 applies, and the owner accepts that residual risk with this ADR.
 6. `host-ws-01` keeps its ADR-0040 restrictions. It gets **no** key on PC Alentejo.

@@ -1,7 +1,7 @@
 # Host Inventory
 
 **Owner:** Rui Silva (`9dot5`) · **Status:** Proposed · **Review by:** 2027-01-25
-**Related:** [docs/naming-conventions.md](../docs/naming-conventions.md), [architecture/SYSTEM_LANDSCAPE.md](../architecture/SYSTEM_LANDSCAPE.md), [SERVICE_CATALOG.md](SERVICE_CATALOG.md), [BREAK_GLASS_REGISTER.md](BREAK_GLASS_REGISTER.md), [ADR-0031](../adr/ADR-0031-node-admission-policy.md), [ADR-0040](../adr/ADR-0040-workstation-ssh-over-tailscale.md)
+**Related:** [docs/naming-conventions.md](../docs/naming-conventions.md), [architecture/SYSTEM_LANDSCAPE.md](../architecture/SYSTEM_LANDSCAPE.md), [SERVICE_CATALOG.md](SERVICE_CATALOG.md), [BREAK_GLASS_REGISTER.md](BREAK_GLASS_REGISTER.md), [ADR-0031](../adr/ADR-0031-node-admission-policy.md), [ADR-0040](../adr/ADR-0040-workstation-ssh-over-tailscale.md), [ADR-0041](../adr/ADR-0041-homelab-ssh-legion-alentejo.md), [ADR-0042](../adr/ADR-0042-multi-agent-coexistence.md)
 
 The single list of the owner's machines. Every other document names a host by its **ID** from this table. IDs follow the naming convention (role-based, no personal names); the Windows host name and the nickname are kept so that people and tools can find the machine. This repository is public: no addresses, ports or passwords here.
 
@@ -13,8 +13,9 @@ The single list of the owner's machines. Every other document names a host by it
 | `host-ops-01` | `DESKTOP-Q3GOUP4` | PC Alentejo | Node (candidate) | Owned, account `yau` | Desktop, Ryzen 7 3700X, 16 GB RAM, NVIDIA GPU (8 GB VRAM, stated in agent-sandbox, not measured), 465 GB disk | Windows (version not recorded yet) | Monitoring stack (ADR-0035), Ollama, k3s in WSL, second agent host (ADR-0034) | Active; not admitted to Operations MCP |
 | `host-ws-01` | `DESKTOP-QFGSNE9` | maindesktop | Workstation | Owned (to confirm), account `9dot5` | Laptop Toshiba Satellite L50-A, i7-4700MQ, 3.2 GB RAM, GT 740M, 930 GB disk | **Windows 10 Home 1903 (build 18362), out of support** | SSH client and target for the owner | Active; restricted (see below) |
 | `ext-sigma-01` | `sigma04.ist.utl.pt` | Sigma | External shared host | Shared (university) | 8 vCPU, 15 GB (SERVICE_CATALOG) | Debian 12 | Course work, monitoring centre (ADR-0030) | Active, not owned |
+| `ext-work-01` | Not recorded (employer's) | Work PC | External workstation | Employer's, used by the owner | Not recorded | Not recorded | SSH client for the owner only. **Never a lab resource** (ADR-0042 decision 11) | Active; excluded from the lab |
 
-Classes: a **node** is a host that Operations MCP may reach once admitted (ADR-0031). A **workstation** is an owner's machine used by people and agent sessions; it is a developer client (TB-8), not a node.
+Classes: a **node** is a host that Operations MCP may reach once admitted (ADR-0031). A **workstation** is an owner's machine used by people and agent sessions; it is a developer client (TB-8), not a node. An **external workstation** is a machine the owner uses but does not own; it holds nothing of the lab and no agent connects to it (ADR-0042).
 
 ## Access between hosts
 
@@ -22,15 +23,24 @@ Classes: a **node** is a host that Operations MCP may reach once admitted (ADR-0
 |---|---|---|---|---|
 | `host-dev-01` | `host-ws-01` | SSH over Tailscale, key only | `rsilv@Legion-9dot5` ed25519 key | ADR-0040 |
 | `host-ws-01` | `host-dev-01` | SSH over Tailscale, key only | `9dot5@DESKTOP-QFGSNE9` ed25519 key | ADR-0040 |
-| `host-dev-01` | `host-ops-01` | SSH or Desktop Commander | Owner | Break-glass only (ADR-0033, ADR-0039) |
+| `host-dev-01` | `host-ops-01` | SSH over Tailscale, key only | `rsilv@Legion-9dot5` ed25519 key | ADR-0041 (Proposed; applied on owner instruction 2026-10-31) |
+| `host-ops-01` | `host-dev-01` | SSH over Tailscale, key only | `yau@DESKTOP-Q3GOUP4` ed25519 key | ADR-0041 (Proposed; applied on owner instruction 2026-10-31) |
+| `host-dev-01` | `host-ops-01` | Desktop Commander | Owner | Break-glass only (ADR-0033, ADR-0039) |
 | `host-dev-01` | `ext-sigma-01` | SSH, user account | Owner's key | Course work; ADR-0030 for monitoring |
+| `host-ops-01` | `ext-sigma-01` | SSH local forward to the metrics receiver only, from the k3s pod `sigma-tunnel` | Tunnel key, restricted to one loopback forward, no commands | ADR-0042 decision 9 (exception pending the owner's decision) |
+| `ext-work-01` | `ext-sigma-01` | SSH, user account | Owner's key on `ext-work-01` | ADR-0042 decision 11 (owner use only) |
 
 Key fingerprints are recorded so that an unexpected key can be spotted:
 
 | Key | Fingerprint (SHA256) | Authorised on |
 |---|---|---|
-| `rsilv@Legion-9dot5` (ed25519) | `a85j9NJJNkzncvmHDkbzYGND5Np+yKRmU5ceCdWv2/c` | `host-ws-01` (`administrators_authorized_keys` and the user file) |
-| `9dot5@DESKTOP-QFGSNE9` (ed25519) | `o70xPnklcInqSHuiQzvhiMnwgdxwsujOVQIGdj91vTk` | `host-dev-01` (`administrators_authorized_keys`) |
+| `rsilv@Legion-9dot5` (ed25519) | `a85j9NJJNkzncvmHDkbzYGND5Np+yKRmU5ceCdWv2/c` | `host-ws-01` (`administrators_authorized_keys` and the user file); `host-ops-01` (`administrators_authorized_keys`, `from=` pinned to the source host) |
+| `9dot5@DESKTOP-QFGSNE9` (ed25519) | `o70xPnklcInqSHuiQzvhiMnwgdxwsujOVQIGdj91vTk` | `host-dev-01` (`administrators_authorized_keys`, `from=` pinned to the source host) |
+| `yau@DESKTOP-Q3GOUP4` (ed25519, created 2026-10-31) | `3oWU1b2qCiiwQ+KmAsYpLEvT2zzZ1hdF0AXtH7B6/80` | `host-dev-01` (`administrators_authorized_keys`, `from=` pinned to the source host) |
+| Tunnel key of `host-ops-01` (ed25519, created 2026-10-31) | `c5vBQ1nhN5b+HrpBJnZX/dVW3kdzrddqlGeJy2yHxL0` | `ext-sigma-01` (user file; `restrict`, one `permitopen`, `command` set, from 2026-10-31) |
+| Key of `ext-work-01` (ed25519) | `nw1QIniclle4DlfBpKEfHyJ/hkRiJwFHlYst3lvfuIk` | `ext-sigma-01` (user file) |
+
+On 2026-10-31 two keys were removed from `host-dev-01`: the `ext-sigma-01` key, which was also used from `host-ops-01`, and Legion's own key.
 
 ## Baseline for SSH servers on workstations (ADR-0040)
 
@@ -40,7 +50,8 @@ Key fingerprints are recorded so that an unexpected key can be spotted:
 
 | Host | Key-only | Tailscale-only firewall | Checked |
 |---|---|---|---|
-| `host-dev-01` | Yes | Rule is on the Private profile; the Tailscale and Wi-Fi interfaces are both Private, so the LAN can reach port 22 too | 2026-10-25 |
+| `host-dev-01` | Yes; ADR-0041 hardened baseline | Yes (`OpenSSH-Server-In-TCP` limited to the tailnet addresses of `host-ops-01` and `host-ws-01`, on every profile; the LAN no longer reaches port 22) | 2026-10-31 |
+| `host-ops-01` | Yes (from 2026-10-31; passwords were accepted before); ADR-0041 hardened baseline | Yes (same rule, limited to the tailnet address of `host-dev-01`, from 2026-10-31) | 2026-10-31 |
 | `host-ws-01` | Yes (from 2026-10-25) | Yes (`sshd-tailscale`; the all-profiles rule disabled 2026-10-25) | 2026-10-25 |
 
 ## Restrictions for `host-ws-01`

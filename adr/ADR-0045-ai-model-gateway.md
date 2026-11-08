@@ -4,7 +4,7 @@
 - **Date:** 2026-11-08
 - **Deciders:** Rui Silva (`9dot5`)
 - **Review by:** 2027-05-08
-- **Related:** ADR-0004, ADR-0007, ADR-0010, ADR-0011, ADR-0017, ADR-0031, ADR-0034, ADR-0035, ADR-0042, ADR-0043, ADR-0044, [roadmap/PHASE_04_AI_PLATFORM.md](../roadmap/PHASE_04_AI_PLATFORM.md), [operations/SERVICE_CATALOG.md](../operations/SERVICE_CATALOG.md), [governance/ROI_MATRIX.md](../governance/ROI_MATRIX.md), [RISK_REGISTER.md](../RISK_REGISTER.md) (R-40, R-41, R-42)
+- **Related:** ADR-0004, ADR-0007, ADR-0010, ADR-0011, ADR-0017, ADR-0025, ADR-0031, ADR-0034, ADR-0035, ADR-0042, ADR-0043, ADR-0044, [roadmap/PHASE_04_AI_PLATFORM.md](../roadmap/PHASE_04_AI_PLATFORM.md), [operations/SERVICE_CATALOG.md](../operations/SERVICE_CATALOG.md), [governance/ROI_MATRIX.md](../governance/ROI_MATRIX.md), [RISK_REGISTER.md](../RISK_REGISTER.md) (R-40, R-41, R-42)
 
 ## Context
 
@@ -60,6 +60,11 @@ Facts, measured or checked on 2026-11-08:
 
    Prompts and responses are never logged. Prometheus metrics on `/metrics` feed the monitoring stack of ADR-0035.
 
+7. **Deployed by Ansible (ADR-0025).**
+   - **Target.** The aigw container is managed by an `ansible/roles/aigw` role through `ansible-pull` on `host-ops-01`, like the monitoring stack (ADR-0035). The role covers the container, its port binding and its health check.
+   - **Not in the repository.** The config with consumer key hashes and the provider secrets file stay outside the repository (ADR-0025 decision 5). The role takes their paths, not their contents.
+   - **Until the role is merged.** The container running since 2026-11-08 was started by hand with `podman compose` from the aigw repository. It is a prototype. It is recorded in SERVICE_CATALOG as "Production (planned)" and must not be documented as available before the role applies it.
+
 ## Options considered
 
 | Option | Benefits | Costs and risks | ROI score |
@@ -87,7 +92,8 @@ Score for A is an estimate. Values: value 4, frequency 4, cost 4 (owned hardware
   - no key in Git;
   - a move to the secret manager of ADR-0014 when it exists.
 - Negative: a consumer wrongly granted a cloud alias would send its data to a provider (R-42). Mitigation: grants are owner decisions per consumer, and the default grant is local only.
-- Follow-up (owner): run `scripts/firewall-tailscale.ps1` from the aigw repository, elevated, and enable Podman machine start at logon.
+- Follow-up: `ansible/roles/aigw` (decision 7), with `ansible-lint` and a syntax check in the pull request (ADR-0025 decision 6). The container image is published to the registry of the private aigw repository and pinned by digest.
+- Follow-up (owner): run `scripts/firewall-tailscale.ps1` from the aigw repository, elevated, and enable Podman machine start at logon. The firewall rule moves into the role when Windows settings are in scope (ADR-0025 decision 3).
 - Follow-up: scrape `/metrics` from the monitoring stack (ADR-0035) and add the alerts in the aigw runbook.
 - Follow-up: point the OpenCode agents in the ARC runner pods at `aigw`, with a key per agent identity, instead of at Ollama directly.
 

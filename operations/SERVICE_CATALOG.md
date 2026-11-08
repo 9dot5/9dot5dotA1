@@ -20,6 +20,8 @@ runbook link, ADR link, last review date.
 | Kibana | Owner interface for audit records and logs | PC Alentejo | Production (planned) | Rui Silva | Internal: loopback only, never Sigma | Internal | to write | ADR-0035 | 2026-10-25 |
 | Prometheus | Metrics store (ADR-0009 signals) | PC Alentejo | Production (planned) | Rui Silva | Internal: loopback only | Internal (metrics) | RB-host-resources | ADR-0035 | 2026-10-25 |
 | Grafana | Metrics dashboards; Sigma view (F-10) | PC Alentejo | Production (planned) | Rui Silva | Internal: loopback now; overlay with TLS for F-10 | Internal (metrics) | to write | ADR-0035 | 2026-10-25 |
+| Ollama | Local model serving on the GPU (RTX 3060 Ti, 8 GB VRAM) | PC Alentejo | Production (planned) | Rui Silva | VPN: Tailscale range only (firewall rule); no authentication, so applications use aigw | Depends on the consumer; no content stored | aigw runbook (`docs/operations.md` in `9dot5/ai-gateway`) | ADR-0007, ADR-0045 (Accepted) | 2026-11-08 |
+| aigw | AI model gateway: OpenAI-compatible API over Ollama and, opt-in, Claude/OpenAI/Gemini; per-consumer keys, allow-lists, limits, metrics | PC Alentejo (Podman container) | Production (planned) | Rui Silva | VPN: loopback, local containers and Tailscale range only, TCP 4000 | Depends on the consumer (ADR-0045 decision 4); logs and metrics hold no content | `docs/operations.md` in `9dot5/ai-gateway` | ADR-0045 (Accepted) | 2026-11-08 |
 
 Status of the entries above: installed on PC Alentejo on 2026-10-25 by `ansible/roles/monitoring` (ADR-0035, Phase 00 exception, ADR-0039). Health at install: Elasticsearch green, Kibana available, Prometheus ready, Grafana ok. Measured idle memory: Elasticsearch 1.79 GB, Kibana 0.94 GB, Prometheus 83 MB, Grafana 221 MB; host free RAM 3.2 GB with the stack running, after stopping non-essential desktop applications.
 
@@ -28,7 +30,7 @@ Status of the entries above: installed on PC Alentejo on 2026-10-25 by `ansible/
 | Host | Role | Hardware (measured or stated) | Shared? | Notes |
 |---|---|---|---|---|
 | Control plane (candidate) | Portal, identity, operator access | To measure: candidate desktop 8C/16T, 16 GB, discrete GPU | No | Decision in ADR to be written |
-| PC Alentejo (`DESKTOP-Q3GOUP4`, `host-ops-01`) | Monitoring stack (ADR-0035), second agent host (ADR-0034), Ollama | Measured 2026-10-25: Ryzen 7 3700X, 16 GB RAM (WSL capped at 8 GB) | No (owned, ADR-0031) | Assumed to be the control-plane candidate above |
+| PC Alentejo (`DESKTOP-Q3GOUP4`, `host-ops-01`) | Monitoring stack (ADR-0035), second agent host (ADR-0034), Ollama, AI model gateway aigw (ADR-0045) | Measured 2026-10-25: Ryzen 7 3700X, 16 GB RAM (WSL capped at 8 GB) | No (owned, ADR-0031) | Assumed to be the control-plane candidate above |
 | maindesktop (`DESKTOP-QFGSNE9`, `host-ws-01`) | Workstation only | Measured 2026-10-25: i7-4700MQ, 3.2 GB RAM | No | Out of support; holds nothing of value (ADR-0040 decision 5) |
 
 Hardware, classes and access paths for every host: [HOST_INVENTORY.md](HOST_INVENTORY.md).

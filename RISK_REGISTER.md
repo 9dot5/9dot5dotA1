@@ -58,6 +58,9 @@
 | R-37 | Two agent sessions change the same resource at once, or undo each other's work | On 2026-10-31 a Devin session and two Claude Code sessions acted on `host-ops-01` and `ext-sigma-01` without knowing about each other, all with the owner's keys | 4 | 3 | 12 | High | Reduce | Identities per tool and leases (ADR-0042); audit (ADR-0017) | Open |
 | R-38 | A compromise of PC Alentejo reaches the owner's university account | The k3s pod `sigma-tunnel` holds a private key authorised on `ext-sigma-01` (ADR-0042 decision 9). It was authorised without options until 2026-10-31 | 2 | 4 | 8 | Medium | Reduce | Key restricted to one loopback forward with no commands (2026-10-31); owner decides to keep or remove the receiver | Open |
 | R-39 | Rootless Podman on `host-ops-01` crashes the whole WSL2 VM | On 2026-10-31 starting containers under the Podman machine killed the entire WSL2 utility VM, taking the k3s cluster down with it (reproduced 4x; clean poweroff request, no OOM). Host runs a Windows Insider build with a recent custom WSL2 kernel; the same stack ran on 2026-10-25 | 3 | 4 | 12 | High | Reduce | Monitoring stack moved to k3s/containerd (homelab-gitops PR #5); Podman path considered unsafe until WSL/Windows update; re-test after `wsl --update` | Open |
+| R-40 | Cloud model spend grows without a budget | aigw can route to paid Claude/OpenAI/Gemini APIs (ADR-0045); a fallback or an injected agent (T-03) can repeat calls. No spend cap in the gateway | 3 | 3 | 9 | Medium | Reduce | Per-consumer cloud grants (default local only), rate limits, `aigw_tokens_total` metric and alert; provider-side spend limits (owner) | Open |
+| R-41 | Provider API keys on `host-ops-01` are stolen | Keys sit in a user-only file on the host for the aigw container (ADR-0045). A host compromise exposes them | 2 | 4 | 8 | Medium | Reduce | No key in Git; one key per provider, revocable at the provider; move to the secret manager of ADR-0014 | Open |
+| R-42 | Internal data is sent to a hosted model provider | A consumer handling Internal data is granted a cloud alias, directly or through a fallback (ADR-0045 decision 4) | 2 | 4 | 8 | Medium | Avoid | Grants are owner decisions per consumer by data class; fallbacks never widen grants (enforced and tested in aigw) | Open |
 
 ## 3. Summary
 
@@ -65,7 +68,7 @@
 |---|---|---|
 | Critical | 1 | R-01 |
 | High | 17 | R-02, R-04, R-05, R-06, R-08, R-10, R-13, R-14, R-21, R-25, R-27, R-28, R-29, R-31, R-35, R-36, R-39 |
-| Medium | 19 | R-03, R-07, R-09, R-11, R-12, R-15, R-16, R-17, R-18, R-19, R-20, R-22, R-23, R-24, R-26, R-30, R-32, R-33, R-34 |
+| Medium | 22 | R-03, R-07, R-09, R-11, R-12, R-15, R-16, R-17, R-18, R-19, R-20, R-22, R-23, R-24, R-26, R-30, R-32, R-33, R-34, R-40, R-41, R-42 |
 | Low | 0 | — |
 
 Scores are estimates. The first-week items in [PRIORITY_MATRIX.md](PRIORITY_MATRIX.md) reduce R-01, R-04, R-05 and part of R-06. R-21 needs an owner decision, not more work.
@@ -91,3 +94,4 @@ Scores are estimates. The first-week items in [PRIORITY_MATRIX.md](PRIORITY_MATR
 | 2026-10-25 | R-35 added (ADR-0039, one-off agent bootstrap of PC Alentejo through Desktop Commander) | Session draft. Owner to review |
 | 2026-10-25 | R-36 added (`host-ws-01`, unsupported Windows on the tailnet, ADR-0040) | Session draft. Owner to review |
 | 2026-10-31 | R-39 added (rootless Podman kills the WSL2 VM on `host-ops-01`, found during the ADR-0035 bootstrap) | Devin session. Owner to review |
+| 2026-11-08 | R-40, R-41 and R-42 added for the AI model gateway (ADR-0045) | Claude Code session on PC Alentejo, no `AGENT_ID` (R-01), on owner instruction |

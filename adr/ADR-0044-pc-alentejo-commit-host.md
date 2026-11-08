@@ -4,7 +4,7 @@
 - **Date:** 2026-11-08
 - **Deciders:** Rui Silva (`9dot5`)
 - **Review by:** 2027-02-08
-- **Related:** ADR-0010, ADR-0011, ADR-0017, ADR-0034, ADR-0036, ADR-0039, ADR-0042, ADR-0043, [CLAUDE.md](../CLAUDE.md), [RISK_REGISTER.md](../RISK_REGISTER.md) (R-01, R-27), [roadmap/PHASE_08_AGENTS.md](../roadmap/PHASE_08_AGENTS.md)
+- **Related:** ADR-0010, ADR-0011, ADR-0017, ADR-0034 (adds to Part B), ADR-0036, ADR-0039, ADR-0042, ADR-0043, [CLAUDE.md](../CLAUDE.md), [RISK_REGISTER.md](../RISK_REGISTER.md) (R-01, R-27), [roadmap/PHASE_08_AGENTS.md](../roadmap/PHASE_08_AGENTS.md)
 
 ## Context
 
@@ -38,7 +38,8 @@ Facts, checked on 2026-11-08:
    A Devin session uses `Agent-Tool: devin`. Until identities are active, the trailers are the only record of which tool and host made a commit authored by the owner.
 3. **One host per branch.** A branch is worked on from one host at a time. Before changing a shared document that another open pull request also edits, a session takes a lease (ADR-0042 Part B).
 4. **This is an interim regime.** It ends for an identity when that identity is `active` with a key for this host and the audit destination is configured (ADR-0017, ADR-0034 Part B). From then on, sessions here start through `scripts/start-agent.ps1`, as on Legion.
-5. **No other access changes.** This ADR covers commits and pull requests to GitHub repositories only. It grants no new path between hosts (ADR-0034 decision 8, ADR-0041) and no access to nodes (ADR-0029).
+5. **Relation to ADR-0034 Part B (Accepted).** This ADR adds to ADR-0034 and does not edit it: Part B (own `agent-runner` account, own keys, owner setup) remains the target for this host. Until its preconditions (decision 10) are met, sessions here work under decisions 1 to 4 above. This is the same interim that ADR-0036 decision 6 sets for agent actions on GitHub: they carry the owner's identity until GitHub Apps and identities exist.
+6. **No other access changes.** This ADR covers commits and pull requests to GitHub repositories only. It grants no new path between hosts (ADR-0034 decision 8, ADR-0041) and no access to nodes (ADR-0029).
 
 ## Options considered
 

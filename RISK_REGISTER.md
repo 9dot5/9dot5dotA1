@@ -19,7 +19,7 @@
 
 | ID | Risk | Cause and evidence | L | I | Score | Rating | Treatment | Control or backlog | Status |
 |---|---|---|---|---|---|---|---|---|---|
-| R-01 | Owner-session actions are not recorded | `~/.9dot5dotA1/audit` absent. ADR-0017 Verification: workspace trust not accepted. Deny rules not verified | 5 | 5 | 25 | Critical | Reduce | B-01 | Open |
+| R-01 | Owner-session actions are not recorded | `~/.9dot5dotA1/audit` absent. ADR-0017 Verification: workspace trust not accepted. Deny rules not verified. From 2026-11-08 it covers sessions on PC Alentejo too (ADR-0044), whose commits carry `Agent-Tool`/`Agent-Host` trailers | 5 | 5 | 25 | Critical | Reduce | B-01 | Open |
 | R-02 | An agent merges a harmful change into `main` | Owner decision 2026-10-25 (ADR-0036): agents may merge after required checks. The risk is no longer an unauthorised merge but a harmful authorised one | 3 | 5 | 15 | High | Reduce | Required checks on `main`, alert on each merge, revert (ADR-0036). B-03 | Open, owner decision |
 | R-03 | Owner GitHub account is taken over | Sole approver and key holder. No threat entry. Recovery path not recorded | 2 | 5 | 10 | Medium | Reduce | B-02, B-13 | Open |
 | R-04 | A credential is committed to Git | `.gitignore` exists (secret patterns, `.env`, `*.pem`, `*.key`, `*.token`, audit sink files; checked 2026-10-25). No secret scanning, no push protection, no pre-commit scan | 3 | 5 | 15 | High | Reduce | B-04 | Open (`.gitignore` done; scanning missing) |

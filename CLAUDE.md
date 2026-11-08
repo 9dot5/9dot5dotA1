@@ -52,6 +52,9 @@ changing anything:
 - Commits are signed with the session's agent key. Do not change `user.name`, `user.email` or the
   signing key.
 - You may not edit `.claude/**`, `scripts/**` or the audit directory. Report a need to change them.
+- Until identities are active (ADR-0044, ADR-0036 decision 6), sessions commit with the owner's
+  author, on branches only. Every commit message ends with the trailers
+  `Agent-Tool: <claude-code|devin|...>` and `Agent-Host: <host ID, e.g. host-ops-01, host-dev-01>`.
 
 ## Subagents
 

@@ -1,6 +1,6 @@
 # ADR-0045: AI model gateway (aigw) on PC Alentejo
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Date:** 2026-11-08
 - **Deciders:** Rui Silva (`9dot5`)
 - **Review by:** 2027-05-08
@@ -108,3 +108,9 @@ Score for A is an estimate. Values: value 4, frequency 4, cost 4 (owned hardware
 - **Threats.**
   - A leaked consumer key allows model use up to that consumer's grants and limits. Revoke it by removing its hash.
   - A prompt injected into an agent (T-03) can spend cloud tokens through that agent's key, bounded by its grants and rate limit.
+
+## Change history
+
+| Date | Change | By |
+|---|---|---|
+| 2026-11-08 | Accepted, with residual risks R-40, R-41 and R-42. ADR-0037 double check: automatic check passed (headers, links, Related ADRs, risks in RISK_REGISTER, no contradiction with an Accepted ADR after the amendment of the same day); the owner named the ADR and confirmed it in the session ("Accept ADR-0045") | Owner decision, recorded by a Claude Code session on PC Alentejo (no `AGENT_ID`, R-01) |

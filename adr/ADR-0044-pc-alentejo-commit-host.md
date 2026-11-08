@@ -1,6 +1,6 @@
 # ADR-0044: PC Alentejo commits to this repository on the same terms as Legion
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Date:** 2026-11-08
 - **Deciders:** Rui Silva (`9dot5`)
 - **Review by:** 2027-02-08
@@ -80,3 +80,9 @@ Score for A is an estimate. Values: value 4, frequency 4, cost 5, risk 2, revers
     - required checks and the owner's merge;
     - CODEOWNERS on protected paths.
   - R-27 (routine work through an unregistered path) does not apply: commits use GitHub, the channel ADR-0034 chose, not a session into another host.
+
+## Change history
+
+| Date | Change | By |
+|---|---|---|
+| 2026-11-08 | Accepted, with residual risks R-01 (extended to PC Alentejo). ADR-0037 double check: automatic check passed (headers, links, Related ADRs, risks in RISK_REGISTER, no contradiction with an Accepted ADR after the amendment of the same day); the owner named the ADR and confirmed it in the session ("Accept ADR-0044") | Owner decision, recorded by a Claude Code session on PC Alentejo (no `AGENT_ID`, R-01) |

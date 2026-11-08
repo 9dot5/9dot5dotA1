@@ -20,7 +20,7 @@ defined in MCP_STRATEGY.md.
 - [ ] Identities per tool (Claude Code, Devin and others), leases on shared resources, and the external workstation class ([ADR-0042](../adr/ADR-0042-multi-agent-coexistence.md), Proposed)
 - [ ] Audit sink on PC Alentejo (Elasticsearch, ADR-0035, Accepted), so that agent sessions can start
 - [ ] Work queue for the agent dev loop, bounded automatic merge into integration branches, one repository per client ([ADR-0043](../adr/ADR-0043-agent-work-queue.md), Proposed)
-- [ ] PC Alentejo commits on the same terms as Legion, with tool and host trailers, until per-host agent identities are active ([ADR-0044](../adr/ADR-0044-pc-alentejo-commit-host.md), Proposed)
+- [ ] PC Alentejo commits on the same terms as Legion, with tool and host trailers, until per-host agent identities are active ([ADR-0044](../adr/ADR-0044-pc-alentejo-commit-host.md), Accepted 2026-11-08)
 
 ## Exit criteria
 

@@ -37,7 +37,8 @@ and no criterion below 2 without a recorded mitigation.
 | Git hosting (GitHub) | 00 | 5 | 5 | 5 | 4 | 4 | 3 | 4.50 | Accepted by default | ADR-0006 |
 | Knowledge base (Markdown in Git) | 01 | 5 | 5 | 5 | 5 | 5 | 3 | 4.86 | Accepted by default | ADR-0008 |
 | Identity provider (SSO, MFA) | 04 | 4 | 4 | 3 | 3 | 3 | 4 | 3.43 (below threshold) | To evaluate | ADR-0012 (Proposed) |
-| Local AI models | 05 | 3 | 3 | 1 | 3 | 4 | 5 | 2.86 (below threshold) | To evaluate; cost 1 needs a recorded mitigation | ADR-0007 |
+| Local AI models | 05 | 3 | 3 | 1 | 3 | 4 | 5 | 2.86 (below threshold) | To evaluate; cost 1 needs a recorded mitigation. Mitigation proposed in ADR-0045: owned GPU host, capacity measured 2026-11-08; re-score at the Phase 04 gate | ADR-0007 |
+| AI model gateway (aigw) over the local GPU and opt-in hosted APIs | 04 | 4 | 4 | 4 | 3 | 5 | 5 | 4.00 (estimate) | Proposed; prototype running on PC Alentejo | ADR-0045 (Proposed) |
 | Vector store / RAG | 05 | 3 | 2 | 2 | 3 | 4 | 4 | 2.86 (below threshold) | To evaluate | ADR-0008 |
 | Agents: Claude Code in-repo | 00 | 5 | 5 | 2 | 2 | 4 | 5 | 3.57 (estimate) | Adopted on Proposed ADR | ADR-0011 (Proposed) |
 | Reverse proxy (candidate: Caddy) | 04 | 4 | 3 | 4 | 3 | 5 | 3 | 3.71 (estimate) | Candidate; confirm in Phase 04 | ADR-0013 (Proposed) |

@@ -12,8 +12,8 @@ Decide whether and how to run AI components, based on measured capacity and the 
 
 - [ ] Identity provider evaluated under ROI matrix (SSO, MFA, RBAC) and ADR accepted
 - [ ] Hardware capacity measured on each candidate host: RAM, CPU, disk, power
-- [ ] Model serving evaluated: at least two open-source options, with measured throughput
-- [ ] Data-handling decision for hosted APIs, per data class
+- [ ] Model serving evaluated: at least two open-source options, with measured throughput. First measurement: Ollama on the PC Alentejo GPU through aigw, 2026-11-08 ([ADR-0045](../adr/ADR-0045-ai-model-gateway.md), Proposed)
+- [ ] Data-handling decision for hosted APIs, per data class (proposed in [ADR-0045](../adr/ADR-0045-ai-model-gateway.md) decision 4)
 - [ ] ADR accepted naming the AI components approved for deployment
 
 ## Exit criteria

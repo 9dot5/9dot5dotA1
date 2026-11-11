@@ -110,7 +110,8 @@ if ($Tags -contains 'aigw') {
     $secVm = '/mnt/' + $AigwSecrets.Substring(0, 1).ToLower() + $AigwSecrets.Substring(2).Replace('\', '/')
     $mounts += @('-v', "${cfgVm}:${cfgVm}:ro", '-v', "${secVm}:${secVm}:ro")
     $extra += @('-e', "aigw_config_file=$cfgVm", '-e', "aigw_secrets_file=$secVm", '-e', "aigw_ollama_url=$AigwOllamaUrl")
-    if ($AigwDns.Count -gt 0) { $extra += @('-e', ('{"aigw_dns": ' + (ConvertTo-Json -InputObject @($AigwDns) -Compress) + '}')) }
+    # Windows PowerShell 5.1 drops unescaped quotes when it passes arguments to a native program.
+    if ($AigwDns.Count -gt 0) { $extra += @('-e', (('{"aigw_dns": ' + (ConvertTo-Json -InputObject @($AigwDns) -Compress) + '}') -replace '"', '\"')) }
 }
 $tagList = $Tags -join ','
 $play = 'git clone --quiet --depth 1 --branch "$REPO_BRANCH" "$REPO_URL" /work/repo && cd /work/repo/ansible && ansible-playbook --limit alentejo --tags "$ANSIBLE_TAGS" site.yml "$@"'

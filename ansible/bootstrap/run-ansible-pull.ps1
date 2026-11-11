@@ -18,12 +18,28 @@ Branch to apply. Default: main.
 
 .PARAMETER Rebuild
 Rebuild the runner image even if it exists.
+
+.PARAMETER Tags
+Roles to apply: monitoring, aigw. Default: both.
+
+.PARAMETER AigwConfig
+Windows path of aigw.yaml (consumer key hashes). Required when the aigw role runs. Mounted read-only.
+
+.PARAMETER AigwSecrets
+Windows path of the provider keys file (secrets.env). Required when the aigw role runs. Mounted read-only.
+
+.PARAMETER AigwOllamaUrl
+Ollama as the Podman machine reaches it (the Tailscale address). Required when the aigw role runs.
 #>
 [CmdletBinding()]
 param(
     [string]$RepoUrl = 'https://github.com/9dot5/9dot5dotA1.git',
     [string]$Branch = 'main',
-    [switch]$Rebuild
+    [switch]$Rebuild,
+    [ValidateSet('monitoring', 'aigw')][string[]]$Tags = @('monitoring', 'aigw'),
+    [string]$AigwConfig,
+    [string]$AigwSecrets,
+    [string]$AigwOllamaUrl
 )
 
 $ErrorActionPreference = 'Stop'
@@ -75,14 +91,34 @@ if ($Rebuild -or $LASTEXITCODE -ne 0) {
 $socket = (& podman info --format '{{.Host.RemoteSocket.Path}}').Trim() -replace '^unix://', ''
 if (-not $socket) { throw 'Could not find the Podman socket path.' }
 
+# aigw files are mounted read-only at their VM paths; the role gets those paths and the Ollama address
+# as variables, so no path or address is stored in the repository (it is public).
+$extra = @()
+$mounts = @()
+if ($Tags -contains 'aigw') {
+    foreach ($p in @($AigwConfig, $AigwSecrets, $AigwOllamaUrl)) {
+        if (-not $p) { throw 'The aigw role needs -AigwConfig, -AigwSecrets and -AigwOllamaUrl.' }
+    }
+    foreach ($f in @($AigwConfig, $AigwSecrets)) {
+        if (-not (Test-Path -LiteralPath $f -PathType Leaf)) { throw "Missing file: $f" }
+    }
+    $cfgVm = '/mnt/' + $AigwConfig.Substring(0, 1).ToLower() + $AigwConfig.Substring(2).Replace('\', '/')
+    $secVm = '/mnt/' + $AigwSecrets.Substring(0, 1).ToLower() + $AigwSecrets.Substring(2).Replace('\', '/')
+    $mounts += @('-v', "${cfgVm}:${cfgVm}:ro", '-v', "${secVm}:${secVm}:ro")
+    $extra += @('-e', "aigw_config_file=$cfgVm", '-e', "aigw_secrets_file=$secVm", '-e', "aigw_ollama_url=$AigwOllamaUrl")
+}
+$tagList = $Tags -join ','
+$play = 'git clone --quiet --depth 1 --branch "$REPO_BRANCH" "$REPO_URL" /work/repo && cd /work/repo/ansible && ansible-playbook --limit alentejo --tags "$ANSIBLE_TAGS" site.yml "$@"'
+
 & podman run --rm --network monitoring `
     -v "${socket}:/run/podman/podman.sock" `
     -v "${configDirVm}:${configDirVm}" `
     -v "${secretsDirVm}:${secretsDirVm}" `
+    @mounts `
     -e ANSIBLE_CONFIG=/work/repo/ansible/ansible.cfg `
-    -e "REPO_URL=$RepoUrl" -e "REPO_BRANCH=$Branch" `
+    -e "REPO_URL=$RepoUrl" -e "REPO_BRANCH=$Branch" -e "ANSIBLE_TAGS=$tagList" `
     $runnerImage `
-    sh -c 'git clone --quiet --depth 1 --branch "$REPO_BRANCH" "$REPO_URL" /work/repo && cd /work/repo/ansible && ansible-playbook --limit alentejo site.yml'
+    sh -c $play sh @extra
 if ($LASTEXITCODE -ne 0) { throw "The Ansible run failed with exit code $LASTEXITCODE" }
 
 Write-Host ''

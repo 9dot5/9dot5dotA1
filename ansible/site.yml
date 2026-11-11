@@ -3,4 +3,12 @@
   hosts: alentejo
   gather_facts: false
   roles:
-    - monitoring
+    - role: monitoring
+      tags: [monitoring]
+
+- name: AI model gateway on PC Alentejo (ADR-0045)
+  hosts: alentejo
+  gather_facts: false
+  roles:
+    - role: aigw
+      tags: [aigw]

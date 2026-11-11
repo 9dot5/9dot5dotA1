@@ -41,7 +41,7 @@
     security_opt:
       - no-new-privileges:true
     memory: "{{ aigw_memory }}"
-    dns: "{{ aigw_dns }}"
+    dns: "{{ aigw_dns if aigw_dns | length > 0 else omit }}"
     publish:
       - "{{ aigw_bind_address }}:{{ aigw_port }}:4000"
     env:

@@ -20,6 +20,6 @@ aigw_ollama_url: ""
 aigw_bind_address: 0.0.0.0
 aigw_port: 4000
 aigw_memory: 256m
-aigw_dns:
-  - 1.1.1.1
-  - 8.8.8.8
+# Public resolvers avoid the intermittent "no such host" of Podman's internal DNS for cloud API names.
+# Addresses are passed in by the bootstrap script (-AigwDns); empty means the Podman default.
+aigw_dns: []

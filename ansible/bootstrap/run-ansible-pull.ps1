@@ -28,6 +28,9 @@ Windows path of aigw.yaml (consumer key hashes). Required when the aigw role run
 .PARAMETER AigwSecrets
 Windows path of the provider keys file (secrets.env). Required when the aigw role runs. Mounted read-only.
 
+.PARAMETER AigwDns
+DNS resolvers for the aigw container (optional). Recommended: public resolvers, because Podman's internal DNS is unreliable for cloud API names.
+
 .PARAMETER AigwOllamaUrl
 Ollama as the Podman machine reaches it (the Tailscale address). Required when the aigw role runs.
 #>
@@ -39,7 +42,8 @@ param(
     [ValidateSet('monitoring', 'aigw')][string[]]$Tags = @('monitoring', 'aigw'),
     [string]$AigwConfig,
     [string]$AigwSecrets,
-    [string]$AigwOllamaUrl
+    [string]$AigwOllamaUrl,
+    [string[]]$AigwDns = @()
 )
 
 $ErrorActionPreference = 'Stop'
@@ -106,6 +110,7 @@ if ($Tags -contains 'aigw') {
     $secVm = '/mnt/' + $AigwSecrets.Substring(0, 1).ToLower() + $AigwSecrets.Substring(2).Replace('\', '/')
     $mounts += @('-v', "${cfgVm}:${cfgVm}:ro", '-v', "${secVm}:${secVm}:ro")
     $extra += @('-e', "aigw_config_file=$cfgVm", '-e', "aigw_secrets_file=$secVm", '-e', "aigw_ollama_url=$AigwOllamaUrl")
+    if ($AigwDns.Count -gt 0) { $extra += @('-e', ('{"aigw_dns": ' + (ConvertTo-Json -InputObject @($AigwDns) -Compress) + '}')) }
 }
 $tagList = $Tags -join ','
 $play = 'git clone --quiet --depth 1 --branch "$REPO_BRANCH" "$REPO_URL" /work/repo && cd /work/repo/ansible && ansible-playbook --limit alentejo --tags "$ANSIBLE_TAGS" site.yml "$@"'

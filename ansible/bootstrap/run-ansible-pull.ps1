@@ -110,7 +110,7 @@ if ($Tags -contains 'aigw') {
     $AigwConfig = (Resolve-Path -LiteralPath $AigwConfig).ProviderPath
     $AigwSecrets = (Resolve-Path -LiteralPath $AigwSecrets).ProviderPath
     foreach ($f in @($AigwConfig, $AigwSecrets)) {
-        if ($f -notmatch '^[A-Za-z]:\') { throw "Use a local absolute path (for example C:\...): $f" }
+        if ($f -notmatch '^[A-Za-z]:\\') { throw "Use a local absolute path (for example C:\...): $f" }
     }
     $cfgVm = '/mnt/' + $AigwConfig.Substring(0, 1).ToLower() + $AigwConfig.Substring(2).Replace('\', '/')
     $secVm = '/mnt/' + $AigwSecrets.Substring(0, 1).ToLower() + $AigwSecrets.Substring(2).Replace('\', '/')

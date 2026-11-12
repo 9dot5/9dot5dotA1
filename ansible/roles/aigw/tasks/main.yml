@@ -1,0 +1,65 @@
+---
+# aigw container on PC Alentejo (ADR-0045 decision 7). Run by ansible-pull inside the runner
+# container (ADR-0025). The config and the provider keys are files outside the repository; this role
+# takes their paths and never their contents.
+
+- name: Stop if a required path or address is not set
+  ansible.builtin.assert:
+    that:
+      - aigw_config_file | length > 0
+      - aigw_secrets_file | length > 0
+      - aigw_ollama_url | length > 0
+    fail_msg: "Set aigw_config_file, aigw_secrets_file and aigw_ollama_url (see roles/aigw/defaults/main.yml)."
+    quiet: true
+
+- name: Check that the config and secrets files exist
+  ansible.builtin.stat:
+    path: "{{ item }}"
+  loop:
+    - "{{ aigw_config_file }}"
+    - "{{ aigw_secrets_file }}"
+  register: aigw_files
+
+- name: Stop if a file is missing
+  ansible.builtin.assert:
+    that: item.stat.exists
+    fail_msg: "Missing {{ item.item }}. The role does not create it: it holds consumer key hashes or provider keys."
+    quiet: true
+  loop: "{{ aigw_files.results }}"
+  loop_control:
+    label: "{{ item.item }}"
+
+# The image is distroless (no shell), so the health check must be the exec form `CMD`, not `CMD-SHELL`.
+- name: Run aigw
+  containers.podman.podman_container:
+    name: "{{ aigw_container_name }}"
+    image: "{{ aigw_image }}"
+    state: started
+    restart_policy: unless-stopped
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    memory: "{{ aigw_memory }}"
+    dns: "{{ aigw_dns if aigw_dns | length > 0 else omit }}"
+    publish:
+      - "{{ aigw_bind_address }}:{{ aigw_port }}:4000"
+    env:
+      OLLAMA_URL: "{{ aigw_ollama_url }}"
+      AIGW_SECRETS_FILE: /run/secrets/aigw.env
+    volume:
+      - "{{ aigw_config_file }}:/etc/aigw/aigw.yaml:ro"
+      - "{{ aigw_secrets_file }}:/run/secrets/aigw.env:ro"
+    healthcheck: "CMD /aigw healthcheck"
+    healthcheck_interval: 15s
+    healthcheck_timeout: 5s
+    healthcheck_retries: 3
+
+- name: Wait until aigw reports healthy
+  ansible.builtin.command: podman inspect --format '{{ '{{' }}.State.Health.Status{{ '}}' }}' {{ aigw_container_name }}
+  register: aigw_health
+  until: aigw_health.stdout == 'healthy'
+  retries: 12
+  delay: 5
+  changed_when: false

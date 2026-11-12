@@ -1,0 +1,26 @@
+---
+# aigw, the AI model gateway of PC Alentejo (ADR-0045). The image comes from the private
+# 9dot5/ai-gateway repository. Until it is published to a registry and pinned by digest
+# (ADR-0045 follow-up), the image is the one built locally with `podman compose build`.
+aigw_image: localhost/aigw:dev
+aigw_container_name: aigw
+
+# Required, with no default: the paths hold the owner's account name and the Ollama address is a
+# Tailscale address, and this repository is public (ADR-0025 rule 5). Paths are as the Podman
+# machine sees them (C:\ is /mnt/c). The role mounts both files read-only and never reads them.
+#   aigw_config_file:  config with the consumer key hashes (aigw.yaml)
+#   aigw_secrets_file: provider keys, KEY=VALUE (secrets.env)
+#   aigw_ollama_url:   Ollama as the Podman machine reaches it (the Tailscale IP, see runbook)
+aigw_config_file: ""
+aigw_secrets_file: ""
+aigw_ollama_url: ""
+
+# The container publishes on every interface of the Podman machine. Who can reach it (loopback and the
+# Tailscale range only) is set outside Podman, by the Windows firewall rule and the Tailscale port proxy
+# (ADR-0025 decision 3, aigw repo scripts/).
+aigw_bind_address: 0.0.0.0
+aigw_port: 4000
+aigw_memory: 256m
+# Public resolvers avoid the intermittent "no such host" of Podman's internal DNS for cloud API names.
+# Addresses are passed in by the bootstrap script (-AigwDns); empty means the Podman default.
+aigw_dns: []

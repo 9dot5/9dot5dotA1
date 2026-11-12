@@ -1,6 +1,6 @@
 # ADR-0043: A work queue for the agent dev loop, with client projects as separate repositories
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Date:** 2026-10-31
 - **Deciders:** Rui Silva (`9dot5`)
 - **Review by:** 2027-04-30
@@ -81,3 +81,9 @@ Score for A is an estimate. Values: value 5, frequency 4, cost 3, risk 2, revers
 - Data classes: our code is Internal. Client code and data are Confidential and stay in the client repositories.
 - Threats: T-03 (prompt injection through queue items; R-44). Unreviewed merge into a shared branch is bounded by decision 4.
 - This ADR changes how merges happen below `main`. For `main` and the default branch ADR-0036 applies as written; this ADR adds no automatic merge there.
+
+## Change history
+
+| Date | Change | By |
+|---|---|---|
+| 2026-11-12 | Accepted, with residual risks R-43, R-44, R-45, R-46 and R-47. ADR-0037 double check: automatic check passed (headers, links, Related ADRs, risks in RISK_REGISTER, no contradiction with an Accepted ADR, `check_docs.py` 0 problems, after the independent review of PR #14); the owner named the ADR ("aprova ADR-0043") and confirmed it after seeing the check and the residual risks ("sim") | Owner decision, recorded by a Claude Code session on PC Alentejo (no `AGENT_ID`, R-01) |

@@ -16,6 +16,7 @@ Host configuration for owner-controlled hosts. Each host applies its own configu
 | `inventory/hosts.yml` | Host names only, no addresses (the repository is public) |
 | `site.yml` | Which roles run on which host |
 | `roles/monitoring/` | Elasticsearch, Kibana, Prometheus and Grafana as Podman containers |
+| `roles/aigw/` | The aigw AI model gateway as one Podman container ([ADR-0045](../adr/ADR-0045-ai-model-gateway.md) decision 7) |
 | `requirements.yml` | Pinned collections, the same versions as the runner |
 
 ## Run on PC Alentejo (owner)
@@ -37,6 +38,17 @@ Host configuration for owner-controlled hosts. Each host applies its own configu
 - Runs Elasticsearch with security on, then sets the `kibana_system` password, creates the `agent_audit_writer` role (create documents in `agent-audit*` only) and issues one ingest key for the agent audit hook, stored as `audit-sink.token` beside the passwords.
 - Runs Kibana, Prometheus (scraping itself and `windows_exporter`) and Grafana (Prometheus only, no audit data, ADR-0035 decision 4).
 - Publishes every port on `127.0.0.1` only.
+
+## What the aigw role does
+
+- Runs one container, `aigw`: read-only root filesystem, all capabilities dropped, `no-new-privileges`, 256 MB, restart `unless-stopped`, with the image's own health check.
+- Publishes TCP 4000. Reachability from Tailscale is outside Podman: the Windows firewall rule and the port proxy on the Tailscale address are in the aigw repository (`scripts/`), and the owner runs them elevated (ADR-0025 decision 3).
+- Mounts the consumer config and the provider keys file read-only. It checks that they exist and never reads them. Their paths and the Ollama address are variables with no default, because the repository is public. The bootstrap script takes them as `-AigwConfig`, `-AigwSecrets` and `-AigwOllamaUrl`.
+- Waits until the container reports `healthy`.
+
+Apply only this role (a plain run applies only monitoring): `run-ansible-pull.ps1 -Tags aigw -AigwConfig <aigw.yaml> -AigwSecrets <secrets.env> -AigwOllamaUrl <url>`.
+
+**Cut-over from the prototype.** The container started by hand with `podman compose` (project `aigw`) holds port 4000. Stop it first with `podman compose down` in the aigw repository, then apply the role. The image is `ghcr.io/9dot5/ai-gateway`, pinned by digest (v0.1.0); the host must be logged in with `podman login ghcr.io` using a token with `read:packages`. SERVICE_CATALOG stays "Production (planned)" until the role has been applied.
 
 ## Known limits of this version
 

@@ -1,6 +1,6 @@
 # ADR-0041: Hardened SSH between Legion and PC Alentejo
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Date:** 2026-10-31
 - **Deciders:** Rui Silva (`9dot5`)
 - **Review by:** 2027-04-30
@@ -60,3 +60,4 @@ Facts:
 | Date | Change | By |
 |---|---|---|
 | 2026-10-31 | Proposed. After review the same day, the firewall rules and `from=` were pinned to each source host instead of the whole tailnet. The baseline was applied on the owner's instruction before the ADR was written (exception to documentation-first, ADR-0005) | Unregistered Claude Code session on PC Alentejo (no `AGENT_ID`) |
+| 2026-10-31 | Accepted. ADR-0037 double check: automatic check passed; owner named and confirmed it in the session ("resolve tudo", "faz tu eu deixo") | Owner decision, recorded by a Devin session |

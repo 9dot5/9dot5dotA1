@@ -4,7 +4,7 @@
 - **Date:** 2026-10-31
 - **Deciders:** Rui Silva (`9dot5`)
 - **Review by:** 2027-04-30
-- **Related:** ADR-0010, ADR-0011, ADR-0016, ADR-0034, ADR-0036, [BACKLOG.md](../BACKLOG.md) (B-34, B-45), [security/THREAT_MODEL.md](../security/THREAT_MODEL.md) (T-03), [operations/HOST_INVENTORY.md](../operations/HOST_INVENTORY.md)
+- **Related:** ADR-0010, ADR-0011, ADR-0016, ADR-0034, ADR-0036, [BACKLOG.md](../BACKLOG.md) (B-34, B-45), [RISK_REGISTER.md](../RISK_REGISTER.md) (R-43 to R-47), [security/THREAT_MODEL.md](../security/THREAT_MODEL.md) (T-03), [operations/HOST_INVENTORY.md](../operations/HOST_INVENTORY.md)
 
 ## Context
 
@@ -36,7 +36,7 @@ Facts:
    - the pull request was opened by the `agent` workflow;
    - every other check and commit status passed;
    - the head is the reviewed commit;
-   - no changed file is under a protected path (`AUTO_MERGE_DENY_PATHS`: workflows, `security/`, `SECURITY.md`, `CODEOWNERS`, `LICENSE`, `.claude/`, review rules, model configuration).
+   - no changed file is under a protected path (`AUTO_MERGE_DENY_PATHS`, default `.github/`, `security/`, `SECURITY.md`, `CODEOWNERS`, `LICENSE`, `.claude/`, `REVIEW.md`, `opencode.json`; the owner may extend the list in the repository variable, never shorten it below this default).
 
    Changes to security controls or to the pipeline itself are never merged automatically, on any branch (ADR-0010). After an automatic merge the job closes the linked issue, because GitHub applies `Closes #n` only on the default branch.
 
@@ -47,6 +47,7 @@ Facts:
 
    Reusable code is written as modules with their own interface, inside `modules/<name>/`. A module enters the ecosystem only through a pull request that the owner merges. Client data, names and secrets never enter this public repository.
 6. **Prerequisites for the first client** (owner):
+   - the private template repository `client-template`, created once from `agent-sandbox/templates/client`;
    - a GitHub organisation (B-34), so that one runner scale set serves every client repository;
    - access for client repositories to the `agent-sandbox` workflows;
    - branch protection on each client `main`.
@@ -67,16 +68,16 @@ Score for A is an estimate. Values: value 5, frequency 4, cost 3, risk 2, revers
 ## Consequences
 
 - Positive: work continues while the owner is away. Each item leaves a trail: issue, run, pull request and review.
-- Negative: model-reviewed code reaches integration branches without a person. Mitigation: `main` is never automatic; the gate has all checks green and a reviewed head; integration branches are reviewed by the owner before promotion.
-- Negative: an issue body is model input (T-03). Mitigation: author allow-list in the dispatcher; issue numbers validated before any shell use; the worker has repository-scoped tokens only and no secrets beyond `GITHUB_TOKEN`.
-- Negative: hosted review sends the diff to a model provider. ADR-0021 (hosted-AI data handling) is still missing, and for client code it has to be decided before the first client.
+- Negative: model-reviewed code reaches integration branches without a person (R-43). The gate also trusts the `agent/*` branch name (R-46). Mitigation: `main` is never automatic; the gate has all checks green and a reviewed head; integration branches are reviewed by the owner before promotion.
+- Negative: an issue body is model input (T-03, R-44). Mitigation: author allow-list in the dispatcher; issue numbers validated before any shell use; the worker has repository-scoped tokens only and no secrets beyond `GITHUB_TOKEN`.
+- Negative: hosted review sends the diff to a model provider (R-45). ADR-0021 (hosted-AI data handling) is still missing, and for client code it has to be decided before the first client.
 - Follow-up: write ADR-0028 (work tracking) before any Jira adapter.
-- Follow-up: the owner applies decision 7 and verifies it after one reboot.
-- Follow-up, by 2026-11-14 (`architect`, owner reviews): add the queue, dispatcher and client-repository model to [architecture/TARGET_ARCHITECTURE.md](../architecture/TARGET_ARCHITECTURE.md) and [architecture/AGENT_STRATEGY.md](../architecture/AGENT_STRATEGY.md) (ARCHITECTURE_GOVERNANCE).
+- Follow-up: the owner applies decision 7 and verifies it after one reboot (R-47).
+- Follow-up, by 2026-11-14 (`architect`, owner reviews): add the queue, dispatcher and client-repository model to [architecture/TARGET_ARCHITECTURE.md](../architecture/TARGET_ARCHITECTURE.md) and [architecture/AGENT_STRATEGY.md](../architecture/AGENT_STRATEGY.md) (ARCHITECTURE_GOVERNANCE). Tracked as B-47 in [BACKLOG.md](../BACKLOG.md).
 
 ## Security and compliance notes
 
 - Trust boundaries: GitHub (queue, workflows) to the `homelab-arch` runners on `host-ops-01` (TB-8 / node), unchanged from ADR-0034.
 - Data classes: our code is Internal. Client code and data are Confidential and stay in the client repositories.
-- Threats: T-03 (prompt injection through queue items). Unreviewed merge into a shared branch is bounded by decision 4.
-- This ADR changes how merges happen. It does not change ADR-0010 for `main`.
+- Threats: T-03 (prompt injection through queue items; R-44). Unreviewed merge into a shared branch is bounded by decision 4.
+- This ADR changes how merges happen below `main`. For `main` and the default branch ADR-0036 applies as written; this ADR adds no automatic merge there.

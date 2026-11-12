@@ -61,14 +61,19 @@
 | R-40 | Cloud model spend grows without a budget | aigw can route to paid Claude/OpenAI/Gemini APIs (ADR-0045); a fallback or an injected agent (T-03) can repeat calls. No spend cap in the gateway | 3 | 3 | 9 | Medium | Reduce | Per-consumer cloud grants (default local only), rate limits, `aigw_tokens_total` metric and alert; provider-side spend limits (owner) | Open |
 | R-41 | Provider API keys on `host-ops-01` are stolen | Keys sit in a user-only file on the host for the aigw container (ADR-0045). A host compromise exposes them | 2 | 4 | 8 | Medium | Reduce | No key in Git; one key per provider, revocable at the provider; move to the secret manager of ADR-0014 | Open |
 | R-42 | Internal data is sent to a hosted model provider | A consumer handling Internal data is granted a cloud alias, directly or through a fallback (ADR-0045 decision 4) | 2 | 4 | 8 | Medium | Avoid | Grants are owner decisions per consumer by data class; fallbacks never widen grants (enforced and tested in aigw) | Open |
+| R-43 | Model-reviewed code is merged into an integration branch without a person | ADR-0043 decision 4: a pull request from `agent/*` is merged automatically into `integration` or `client/*` after a model review (`VEREDICTO: APROVADO`) and green checks | 3 | 3 | 9 | Medium | Reduce | The gate needs the reviewed head SHA, a pull request opened by the `agent` workflow, and no file under `AUTO_MERGE_DENY_PATHS`; `main` is always the owner's; the owner reviews `integration` before promotion | Open |
+| R-44 | A queue item carries a prompt injection and starts unsafe unattended work (T-03) | ADR-0043: issue text is model input; the loop runs 24/7 while the owner is away. R-06 covers interactive agents only | 2 | 4 | 8 | Medium | Reduce | `QUEUE_ALLOWED_AUTHORS` (default the owner) whatever the repository visibility; issue numbers validated before any shell use; the worker has repository-scoped tokens and no other secret | Open |
+| R-45 | Client code is sent to a hosted model provider before the data-handling rules exist | ADR-0043: the hosted review sends the diff to a provider; ADR-0021 (hosted-AI data handling) is not written. Client code is Confidential | 3 | 4 | 12 | High | Avoid | No client repository is connected until ADR-0021 is Accepted (ADR-0043 Consequences) | Open |
+| R-46 | The automatic-merge gate is bypassed by someone who can push an `agent/*` branch | ADR-0043 decision 4: the head-branch name `agent/*` is one of the conditions; "opened by the `agent` workflow" is checked by the gate, not enforced by GitHub | 2 | 3 | 6 | Medium | Reduce | Branch protection on `main` of every repository (owner, ADR-0033); the deny list; the owner reviews `integration` before promotion | Open |
+| R-47 | The unattended 24/7 loop stops or runs away on a single host | ADR-0043 decision 7: one runner host (`host-ops-01`, one GPU), boot tasks not yet applied (B-34 organisation open) | 3 | 2 | 6 | Medium | Reduce | Concurrency limits in the dispatcher; the owner applies and verifies decision 7 after a reboot; work resumes from the queue labels | Open |
 
 ## 3. Summary
 
 | Rating | Count | Items |
 |---|---|---|
 | Critical | 1 | R-01 |
-| High | 17 | R-02, R-04, R-05, R-06, R-08, R-10, R-13, R-14, R-21, R-25, R-27, R-28, R-29, R-31, R-35, R-36, R-39 |
-| Medium | 22 | R-03, R-07, R-09, R-11, R-12, R-15, R-16, R-17, R-18, R-19, R-20, R-22, R-23, R-24, R-26, R-30, R-32, R-33, R-34, R-40, R-41, R-42 |
+| High | 18 | R-02, R-04, R-05, R-06, R-08, R-10, R-13, R-14, R-21, R-25, R-27, R-28, R-29, R-31, R-35, R-36, R-39, R-45 |
+| Medium | 26 | R-03, R-07, R-09, R-11, R-12, R-15, R-16, R-17, R-18, R-19, R-20, R-22, R-23, R-24, R-26, R-30, R-32, R-33, R-34, R-40, R-41, R-42, R-43, R-44, R-46, R-47 |
 | Low | 0 | — |
 
 Scores are estimates. The first-week items in [PRIORITY_MATRIX.md](PRIORITY_MATRIX.md) reduce R-01, R-04, R-05 and part of R-06. R-21 needs an owner decision, not more work.
@@ -95,3 +100,4 @@ Scores are estimates. The first-week items in [PRIORITY_MATRIX.md](PRIORITY_MATR
 | 2026-10-25 | R-36 added (`host-ws-01`, unsupported Windows on the tailnet, ADR-0040) | Session draft. Owner to review |
 | 2026-10-31 | R-39 added (rootless Podman kills the WSL2 VM on `host-ops-01`, found during the ADR-0035 bootstrap) | Devin session. Owner to review |
 | 2026-11-08 | R-40, R-41 and R-42 added for the AI model gateway (ADR-0045) | Claude Code session on PC Alentejo, no `AGENT_ID` (R-01), on owner instruction |
+| 2026-11-12 | R-43 to R-47 added for the agent work queue (ADR-0043), found by the review of PR #14 (ADR-0037 check 1) | Claude Code session on PC Alentejo, no `AGENT_ID` (R-01), on owner instruction |

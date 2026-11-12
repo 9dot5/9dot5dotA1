@@ -48,7 +48,7 @@ Host configuration for owner-controlled hosts. Each host applies its own configu
 
 Apply only this role (a plain run applies only monitoring): `run-ansible-pull.ps1 -Tags aigw -AigwConfig <aigw.yaml> -AigwSecrets <secrets.env> -AigwOllamaUrl <url>`.
 
-**Cut-over from the prototype.** The container started by hand with `podman compose` (project `aigw`) holds port 4000. Stop it first with `podman compose down` in the aigw repository, then apply the role. The image is still the locally built `localhost/aigw:dev`; pinning by digest waits for publication to a registry (ADR-0045 follow-up). SERVICE_CATALOG stays "Production (planned)" until the role has been applied.
+**Cut-over from the prototype.** The container started by hand with `podman compose` (project `aigw`) holds port 4000. Stop it first with `podman compose down` in the aigw repository, then apply the role. The image is `ghcr.io/9dot5/ai-gateway`, pinned by digest (v0.1.0); the host must be logged in with `podman login ghcr.io` using a token with `read:packages`. SERVICE_CATALOG stays "Production (planned)" until the role has been applied.
 
 ## Known limits of this version
 

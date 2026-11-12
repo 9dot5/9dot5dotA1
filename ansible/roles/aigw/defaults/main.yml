@@ -1,8 +1,8 @@
 ---
-# aigw, the AI model gateway of PC Alentejo (ADR-0045). The image comes from the private
-# 9dot5/ai-gateway repository. Until it is published to a registry and pinned by digest
-# (ADR-0045 follow-up), the image is the one built locally with `podman compose build`.
-aigw_image: localhost/aigw:dev
+# aigw, the AI model gateway of PC Alentejo (ADR-0045). The image is built and published by the
+# private 9dot5/ai-gateway repository on a version tag (v0.1.0) and pinned by digest. The host needs a
+# `podman login ghcr.io` with a token that has read:packages to pull it.
+aigw_image: ghcr.io/9dot5/ai-gateway:v0.1.0@sha256:878eeedeca120938381d64bab4fa287b78866b88e8e1addf845d4b34624cd20f
 aigw_container_name: aigw
 
 # Required, with no default: the paths hold the owner's account name and the Ollama address is a

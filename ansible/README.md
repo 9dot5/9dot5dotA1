@@ -46,7 +46,7 @@ Host configuration for owner-controlled hosts. Each host applies its own configu
 - Mounts the consumer config and the provider keys file read-only. It checks that they exist and never reads them. Their paths and the Ollama address are variables with no default, because the repository is public. The bootstrap script takes them as `-AigwConfig`, `-AigwSecrets` and `-AigwOllamaUrl`.
 - Waits until the container reports `healthy`.
 
-Apply only this role: `run-ansible-pull.ps1 -Tags aigw -AigwConfig <aigw.yaml> -AigwSecrets <secrets.env> -AigwOllamaUrl <url>`.
+Apply only this role (a plain run applies only monitoring): `run-ansible-pull.ps1 -Tags aigw -AigwConfig <aigw.yaml> -AigwSecrets <secrets.env> -AigwOllamaUrl <url>`.
 
 **Cut-over from the prototype.** The container started by hand with `podman compose` (project `aigw`) holds port 4000. Stop it first with `podman compose down` in the aigw repository, then apply the role. The image is still the locally built `localhost/aigw:dev`; pinning by digest waits for publication to a registry (ADR-0045 follow-up). SERVICE_CATALOG stays "Production (planned)" until the role has been applied.
 

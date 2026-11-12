@@ -15,8 +15,9 @@ aigw_config_file: ""
 aigw_secrets_file: ""
 aigw_ollama_url: ""
 
-# Reachable from loopback, local containers and the Tailscale range only. The Windows firewall rule
-# and the Tailscale port proxy stay outside Podman (ADR-0025 decision 3, aigw repo scripts/).
+# The container publishes on every interface of the Podman machine. Who can reach it (loopback and the
+# Tailscale range only) is set outside Podman, by the Windows firewall rule and the Tailscale port proxy
+# (ADR-0025 decision 3, aigw repo scripts/).
 aigw_bind_address: 0.0.0.0
 aigw_port: 4000
 aigw_memory: 256m

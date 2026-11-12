@@ -20,7 +20,7 @@ Branch to apply. Default: main.
 Rebuild the runner image even if it exists.
 
 .PARAMETER Tags
-Roles to apply: monitoring, aigw. Default: both.
+Roles to apply: monitoring, aigw. Default: monitoring, so a plain run is unchanged. The aigw role needs its three parameters below.
 
 .PARAMETER AigwConfig
 Windows path of aigw.yaml (consumer key hashes). Required when the aigw role runs. Mounted read-only.
@@ -39,7 +39,7 @@ param(
     [string]$RepoUrl = 'https://github.com/9dot5/9dot5dotA1.git',
     [string]$Branch = 'main',
     [switch]$Rebuild,
-    [ValidateSet('monitoring', 'aigw')][string[]]$Tags = @('monitoring', 'aigw'),
+    [ValidateSet('monitoring', 'aigw')][string[]]$Tags = @('monitoring'),
     [string]$AigwConfig,
     [string]$AigwSecrets,
     [string]$AigwOllamaUrl,
@@ -105,6 +105,12 @@ if ($Tags -contains 'aigw') {
     }
     foreach ($f in @($AigwConfig, $AigwSecrets)) {
         if (-not (Test-Path -LiteralPath $f -PathType Leaf)) { throw "Missing file: $f" }
+    }
+    # The VM path is built from a local absolute path (X:\...); a relative or UNC path would give a wrong one.
+    $AigwConfig = (Resolve-Path -LiteralPath $AigwConfig).ProviderPath
+    $AigwSecrets = (Resolve-Path -LiteralPath $AigwSecrets).ProviderPath
+    foreach ($f in @($AigwConfig, $AigwSecrets)) {
+        if ($f -notmatch '^[A-Za-z]:\') { throw "Use a local absolute path (for example C:\...): $f" }
     }
     $cfgVm = '/mnt/' + $AigwConfig.Substring(0, 1).ToLower() + $AigwConfig.Substring(2).Replace('\', '/')
     $secVm = '/mnt/' + $AigwSecrets.Substring(0, 1).ToLower() + $AigwSecrets.Substring(2).Replace('\', '/')

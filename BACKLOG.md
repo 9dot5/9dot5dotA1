@@ -126,6 +126,7 @@ Order: Security Risk (S), then Business Value (B), then ROI (R), then Complexity
 | B-44 | Python must be on the agent account's PATH. S2 B2 R4 C1 | `.claude/settings.json` calls `python`. The agent account has its own profile and may not have Python | Check that `python` resolves for `agent-runner`, or use the full path in the hook command | Hook runs for the agent account and the record appears | 00 |
 | B-45 | No work-tracking model. S1 B3 R3 C2 | README: Jira is the execution source. No ADR on keys, statuses or linking | Write ADR-0028: Jira project keys, Epic/Story/Task rules, PR linking | ADR-0028 Accepted | 01 |
 | B-46 | Terminology drift. S1 B2 R5 C1 | "Claude CLI" and "Claude Code" are used for the same tool (ADR-0011, AGENT_STRATEGY, CONTEXT). Devin is referenced in ADR-0010 and ADR-0011 but not used. Glossary has neither term | Pick one term, fix the references, add to the glossary | Grep finds one term for the tool | 00 |
+| B-47 | Architecture documents lack the agent work queue. S2 B2 R3 C1 | ADR-0043 follow-up: TARGET_ARCHITECTURE and AGENT_STRATEGY do not describe the queue, dispatcher and client repositories | Add the queue, dispatcher and client-repository model to both documents (`architect`; owner reviews), due 2026-11-14 | Both documents describe the queue; ARCHITECTURE_GOVERNANCE check passes | 00 |
 
 ## 4. Notes
 

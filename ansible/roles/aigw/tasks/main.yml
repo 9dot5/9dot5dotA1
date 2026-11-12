@@ -29,6 +29,7 @@
   loop_control:
     label: "{{ item.item }}"
 
+# The image is distroless (no shell), so the health check must be the exec form `CMD`, not `CMD-SHELL`.
 - name: Run aigw
   containers.podman.podman_container:
     name: "{{ aigw_container_name }}"
@@ -50,7 +51,7 @@
     volume:
       - "{{ aigw_config_file }}:/etc/aigw/aigw.yaml:ro"
       - "{{ aigw_secrets_file }}:/run/secrets/aigw.env:ro"
-    healthcheck: /aigw healthcheck
+    healthcheck: "CMD /aigw healthcheck"
     healthcheck_interval: 15s
     healthcheck_timeout: 5s
     healthcheck_retries: 3
